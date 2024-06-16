@@ -1,5 +1,5 @@
 # Yexider Mobile Application
-Mobile client for Yexider. iOS and Android supported. Developed with Flutter by Google.
+Mobile client for Yexider. iOS and Android supported. Developed with Flutter.
 
 [![Preview of Exider][preview_image]][preview_image_url]
 
