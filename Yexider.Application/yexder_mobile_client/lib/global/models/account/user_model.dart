@@ -1,4 +1,5 @@
 import 'package:yexder_mobile_client/global/models/system/result.dart';
+import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 
 class UserModel {
   late String _name;
@@ -9,9 +10,7 @@ class UserModel {
   late String _avatar;
   late String _header;
 
-  UserModel();
-
-  static Result<UserModel> Create
+  UserModel  
   (
     String name, 
     String surname, 
@@ -22,10 +21,51 @@ class UserModel {
     String header
   ) 
   {
-    if () {
+    _name = name;
+    _surname = surname;
+    _nickname = nickname;
+    _balance = balance;
+    _countFriends = countFriends;
+    _avatar = avatar;
+    _header = header;
+  }
 
+  static Result<UserModel> Create
+  (
+    String name,
+    String surname, 
+    String nickname, 
+    double balance,
+    int countFriends,
+    String avatar,
+    String header
+  ) 
+  {
+    if (ValidateHandler.validateString(name, 20) == false) {
+      return Result<UserModel>().failure("Invalid name");
     }
 
-    return Result<UserModel>(UserModel());
+    if (ValidateHandler.validateString(surname, 20) == false) {
+      return Result<UserModel>().failure("Invalid surname");
+    }
+
+    if (ValidateHandler.validateString(nickname, 20) == false) {
+      return Result<UserModel>().failure("Invalid nickname");
+    }
+
+    if (balance < 0) {
+      return Result<UserModel>().failure("Invalid balance");
+    }
+    
+    return Result<UserModel>().success(UserModel
+    (
+      name, 
+      surname, 
+      nickname, 
+      balance, 
+      countFriends, 
+      avatar, 
+      header
+    ));
   }
 }

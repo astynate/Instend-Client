@@ -17,15 +17,19 @@ class Result<type> {
     return error;
   }
 
-  void success(type newValue) {
+  Result<type> success(type newValue) {
     isFailure = false;
     value = newValue;
     error = "Something went wrong";
+
+    return this;
   }
 
-  void failure(String error) {
+  Result<type> failure(String error) {
     isFailure = true;
     value = null;
     error = error;
+
+    return this;
   }
 }

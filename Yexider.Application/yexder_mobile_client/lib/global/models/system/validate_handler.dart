@@ -1,6 +1,10 @@
 class ValidateHandler {
-  static bool ValidateString(String? value, int? maxLength) {
+  static bool validateString(String? value, int maxLength) {
     if (value == null || value == '') {
+      return false;
+    }
+
+    if (value.length > maxLength) {
       return false;
     }
 
