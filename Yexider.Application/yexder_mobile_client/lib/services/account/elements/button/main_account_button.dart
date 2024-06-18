@@ -18,9 +18,9 @@ class MainAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        foregroundColor: textColor, 
-        backgroundColor: backgroundColor, // Text color
-        minimumSize: Size(MediaQuery.of(context).size.width * 0.85, 50), // Width and height
+        foregroundColor: textColor,
+        backgroundColor: backgroundColor,
+        minimumSize: Size(MediaQuery.of(context).size.width * 0.85, 50),
       ),
       onPressed: onPressed,
       child: Text(

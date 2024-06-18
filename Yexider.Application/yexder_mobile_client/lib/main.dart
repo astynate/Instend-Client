@@ -16,3 +16,6 @@ class YexiderApplication extends StatelessWidget {
     );
   }
 }
+
+// Yexider Mobile Client.
+// © Andreev S, 2024 — Minsk, Belarus.

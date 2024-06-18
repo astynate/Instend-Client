@@ -4,7 +4,9 @@ import 'package:yexder_mobile_client/services/account/elements/title/account_pag
 
 class AccountHeader extends StatelessWidget {
   final String title;
-  const AccountHeader({super.key, required this.title});
+  final List<Widget> widgets;
+
+  const AccountHeader({super.key, required this.title, required this.widgets});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,15 @@ class AccountHeader extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(bottom: marginBottom),
-            child: AccountPageTitle(text: title),
+            child: Column(
+              children: [
+                AccountPageTitle(text: title),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(children: widgets)
+                ),
+              ],
+            ),
           ),
         ],
       ),

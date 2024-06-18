@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
+import 'package:yexder_mobile_client/services/account/pages/login/login.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
@@ -9,13 +10,16 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
-          const AccountHeader(title: "Collections, Music, Gallery.\n Only in Yexider."),
+          const AccountHeader(
+            title: "Collections, Music, Gallery.\n Only in Yexider.", 
+            widgets: [],
+          ),
           const Spacer(),
           AccountFooter(children: [
             MainAccountButton(
@@ -24,7 +28,11 @@ class AccountPage extends StatelessWidget {
               Colors.black, 
               backgroundColor: 
               Colors.white, 
-              onPressed: () {}
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const LoginPage();
+                }));
+              }
             ),
             MainAccountButton(
               text: "Sign up", 
