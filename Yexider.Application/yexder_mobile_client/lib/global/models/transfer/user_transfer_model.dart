@@ -1,9 +1,8 @@
 class UserTranferModel {
   String? name;
   String? surname;
+  String? email;
   String? nickname;
-  double? balance;
-  int? countFriends;
-  String? avatar;
-  String? header;
+  String? password;
+  String? confirmPassword;
 }

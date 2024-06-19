@@ -10,4 +10,9 @@ class ValidateHandler {
 
     return true;
   }
+
+  static bool validateEmail(String value) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(value);
+  }
 }

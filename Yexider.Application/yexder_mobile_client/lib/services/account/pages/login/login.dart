@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
+import 'package:yexder_mobile_client/services/account/state/account_sevice_state.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final AccountServiceState state = AccountServiceState();
+  
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +20,15 @@ class LoginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
-          const AccountHeader(title: "Login with Yexider ID", widgets: [
+          AccountHeader(title: "Login with Yexider ID", widgets: [
             Column(
               children: [
-                AccountSimpleInput(placeholder: "Email or nickname"),
+                AccountSimpleInput(placeholder: "Email or nickaname", onChanged: (text) => {
+                  
+                }),
                 Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: AccountSimpleInput(placeholder: "Password"),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: AccountSimpleInput(placeholder: "Password", onChanged: (text) => {}),
                 )
               ],
             ),

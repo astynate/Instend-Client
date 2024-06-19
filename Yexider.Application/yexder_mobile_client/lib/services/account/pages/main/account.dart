@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yexder_mobile_client/global/models/transfer/user_transfer_model.dart';
-import 'package:yexder_mobile_client/main.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/pages/create/create_email.dart';
 import 'package:yexder_mobile_client/services/account/pages/login/login.dart';
@@ -32,10 +30,8 @@ class AccountPage extends StatelessWidget {
               backgroundColor: 
               Colors.white, 
               onPressed: () {
-                YexiderSystem
-
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const LoginPage();
+                  return LoginPage();
                 }));
               }
             ),
@@ -47,7 +43,7 @@ class AccountPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CreateEmailPage(userTransfer: UserTranferModel()),
+                    builder: (context) => CreateEmailPage(),
                   ),
                 );
               }
