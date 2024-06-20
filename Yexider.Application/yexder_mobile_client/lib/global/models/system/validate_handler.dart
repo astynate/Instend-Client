@@ -15,4 +15,8 @@ class ValidateHandler {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(value);
   }
+
+  static bool validatePassword(String? value) {
+    return value != null && validateString(value, 20) && value.length > 8;
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
@@ -44,10 +45,20 @@ class CreatePasswordPage extends StatelessWidget {
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
                   onPressed: () {
-                    if (ValidateHandler.validateString(state.newUser.password.toString(), 20) == true &&
-                        ValidateHandler.validateString(state.newUser.confirmPassword.toString(), 20) == true) 
+                    if (ValidateHandler.validatePassword(state.newUser.password.toString()) == true &&
+                        ValidateHandler.validatePassword(state.newUser.confirmPassword.toString()) == true && 
+                        state.newUser.password.toString() == state.newUser.confirmPassword.toString()
+                    ) 
                     {
-                      
+                      var result = httpClient.get('/accounts');
+
+                      // if (result.isSuccess == true) {
+                      //   result.value?.then((response) => {
+                      //     print(response.body)
+                      //   });
+                      // } else {
+                      //   print(result.error);
+                      // }
                     }
                   },
                 ),

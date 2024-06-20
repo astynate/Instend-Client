@@ -30,7 +30,7 @@ class UserModel {
     _header = header;
   }
 
-  static Result<UserModel> Create
+  static Result<UserModel> create
   (
     String name,
     String surname, 

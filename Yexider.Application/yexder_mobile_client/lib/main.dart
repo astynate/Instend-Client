@@ -10,14 +10,9 @@ class YexiderApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    try {
-      return const MaterialApp(
-        home: AccountPage(),
-        color: Colors.black,
-      );
-    } catch {
-      return null;
-    }
+    return const MaterialApp(
+      home: AccountPage(),
+    );
   }
 }
 
