@@ -39,3 +39,5 @@ abstract class AccountServiceStateBase with Store {
     newUser.email = value;
   }
 }
+
+AccountServiceState accountServiceState = AccountServiceState();

@@ -1,16 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
+import 'package:yexder_mobile_client/global/models/transfer/user_transfer_model.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
 import 'package:yexder_mobile_client/services/account/state/account_sevice_state.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
+import 'package:http/http.dart' as http;
 
 class CreatePasswordPage extends StatelessWidget {
-  final AccountServiceState state = AccountServiceState();
-  CreatePasswordPage({super.key});
+  const CreatePasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +31,11 @@ class CreatePasswordPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: AccountSimpleInput(placeholder: "Password", onChanged: (text) {
-                      state.changePassword(text);
+                      accountServiceState.changePassword(text);
                     }),
                   ),
                   AccountSimpleInput(placeholder: "Confirm password", onChanged: (text) {
-                    state.changeConfirmPassword(text);
+                    accountServiceState.changeConfirmPassword(text);
                   }),
                 ],
               ),
@@ -44,18 +47,21 @@ class CreatePasswordPage extends StatelessWidget {
                   text: "Next",
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
-                  onPressed: () {
-                    if (ValidateHandler.validatePassword(state.newUser.password.toString()) == true &&
-                        ValidateHandler.validatePassword(state.newUser.confirmPassword.toString()) == true && 
-                        state.newUser.password.toString() == state.newUser.confirmPassword.toString()
+                  onPressed: () async {
+                    if (ValidateHandler.validatePassword(accountServiceState.newUser.password.toString()) == true &&
+                        ValidateHandler.validatePassword(accountServiceState.newUser.confirmPassword.toString()) == true && 
+                        accountServiceState.newUser.password.toString() == accountServiceState.newUser.confirmPassword.toString()
                     ) 
                     {
-                      var result = httpClient.get('/accounts');
+                      // var result = await httpClient.post('/accounts', null, {'user': accountServiceState.newUser});
+                      
+                      final newUserJson = jsonEncode(accountServiceState.newUser);
+
+                      http.post(Uri.parse('http://localhost:5000/accounts'), body: newUserJson);
 
                       // if (result.isSuccess == true) {
-                      //   result.value?.then((response) => {
-                      //     print(response.body)
-                      //   });
+                      //   print("!");
+                      //   print(result.value?.body);
                       // } else {
                       //   print(result.error);
                       // }

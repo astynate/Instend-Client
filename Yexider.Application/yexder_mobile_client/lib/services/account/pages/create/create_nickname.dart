@@ -9,8 +9,7 @@ import 'package:yexder_mobile_client/services/account/widgets/footer/account_foo
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
 class CreateNicknamePage extends StatelessWidget {
-  final AccountServiceState state = AccountServiceState();
-  CreateNicknamePage({super.key});
+  const CreateNicknamePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class CreateNicknamePage extends StatelessWidget {
               Column(
                 children: [
                   AccountSimpleInput(placeholder: "Nickname", onChanged: (text) {
-                    state.changeNickname(text);
+                    accountServiceState.changeNickname(text);
                   }),
                 ],
               ),
@@ -39,9 +38,9 @@ class CreateNicknamePage extends StatelessWidget {
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
                   onPressed: () {
-                    if (ValidateHandler.validateString(state.newUser.nickname.toString(), 20) == true) {
+                    if (ValidateHandler.validateString(accountServiceState.newUser.nickname.toString(), 20) == true) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return CreateNamePage();
+                        return const CreateNamePage();
                       }));
                     }
                   },

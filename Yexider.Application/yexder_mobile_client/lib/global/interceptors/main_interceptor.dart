@@ -27,10 +27,10 @@ class YexiderHttpClient {
     }
   }
 
-  Future<Result<http.Response>> post(String url, {Map<String, String>? headers}) async {
+  Future<Result<http.Response>> post(String url, Map<String, String>? headers, Object object) async {
     try {
       return Result<http.Response>()
-        .success(await http.post(Uri.parse('$_url/$url'), headers: _getHeaders(headers)));
+        .success(await http.post(Uri.parse('$_url/$url'), headers: _getHeaders(headers), body: object));
     } catch (exception) {
       return Result<http.Response>()
         .failure(exception.toString());

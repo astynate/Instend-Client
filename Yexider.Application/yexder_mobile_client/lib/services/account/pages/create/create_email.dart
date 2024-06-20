@@ -9,8 +9,7 @@ import 'package:yexder_mobile_client/services/account/widgets/footer/account_foo
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
 class CreateEmailPage extends StatelessWidget {
-  final AccountServiceState state = AccountServiceState();
-  CreateEmailPage({super.key});
+  const CreateEmailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class CreateEmailPage extends StatelessWidget {
               Column(
                 children: [
                   AccountSimpleInput(placeholder: "Email", onChanged: (text) {
-                    state.changeEmail(text);
+                    accountServiceState.changeEmail(text);
                   }),
                 ],
               ),
@@ -39,7 +38,7 @@ class CreateEmailPage extends StatelessWidget {
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
                   onPressed: () {
-                    if (ValidateHandler.validateEmail(state.newUser.email.toString()) == true) {
+                    if (ValidateHandler.validateEmail(accountServiceState.newUser.email.toString()) == true) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return CreateNicknamePage();
                       }));

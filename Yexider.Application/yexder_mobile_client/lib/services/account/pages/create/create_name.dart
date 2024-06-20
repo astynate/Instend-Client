@@ -9,8 +9,7 @@ import 'package:yexder_mobile_client/services/account/widgets/footer/account_foo
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
 class CreateNamePage extends StatelessWidget {
-  final AccountServiceState state = AccountServiceState();
-  CreateNamePage({super.key});
+  const CreateNamePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +27,11 @@ class CreateNamePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: AccountSimpleInput(placeholder: "Name", onChanged: (text) {
-                      state.changeName(text);
+                      accountServiceState.changeName(text);
                     }),
                   ),
                   AccountSimpleInput(placeholder: "Surname", onChanged: (text) {
-                    state.changeSurname(text);
+                    accountServiceState.changeSurname(text);
                   }),
                 ],
               ),
@@ -45,8 +44,8 @@ class CreateNamePage extends StatelessWidget {
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
                   onPressed: () {
-                    if (ValidateHandler.validateString(state.newUser.name.toString(), 20) == true &&
-                        ValidateHandler.validateString(state.newUser.surname.toString(), 20) == true) 
+                    if (ValidateHandler.validateString(accountServiceState.newUser.name.toString(), 20) == true &&
+                        ValidateHandler.validateString(accountServiceState.newUser.surname.toString(), 20) == true) 
                     {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return CreatePasswordPage();
