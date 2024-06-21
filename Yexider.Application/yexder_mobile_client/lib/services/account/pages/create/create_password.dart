@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
+import 'package:yexder_mobile_client/global/models/system/error.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 import 'package:yexder_mobile_client/services/account/api/create/create_account_requests_api.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
+import 'package:yexder_mobile_client/services/account/elements/inputs/password/account_password_input.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
 import 'package:yexder_mobile_client/services/account/state/account_sevice_state.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
@@ -28,11 +31,12 @@ class CreatePasswordPage extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: AccountSimpleInput(placeholder: "Password", onChanged: (text) {
                       accountServiceState.changePassword(text);
-                    }),
+                    }, defaultValue: accountServiceState.newUser.password),
                   ),
                   AccountSimpleInput(placeholder: "Confirm password", onChanged: (text) {
                     accountServiceState.changeConfirmPassword(text);
-                  }),
+                  }, defaultValue: accountServiceState.newUser.confirmPassword),
+                  const AccountPasswordField()
                 ],
               ),
             ]),
@@ -49,7 +53,11 @@ class CreatePasswordPage extends StatelessWidget {
                         accountServiceState.newUser.password.toString() == accountServiceState.newUser.confirmPassword.toString()
                     ) 
                     {                      
-                      await CreateAccountAPI.createAccount(accountServiceState.newUser);
+                      var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
+
+                      if (result.isFailure) {
+                        applicationState.showError(context, YexiderSystemError("Attention", result.error));
+                      }
                     }
                   },
                 ),

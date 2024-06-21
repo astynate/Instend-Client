@@ -26,7 +26,7 @@ class CreateEmailPage extends StatelessWidget {
                 children: [
                   AccountSimpleInput(placeholder: "Email", onChanged: (text) {
                     accountServiceState.changeEmail(text);
-                  }),
+                  }, defaultValue: accountServiceState.newUser.email),
                 ],
               ),
             ]),

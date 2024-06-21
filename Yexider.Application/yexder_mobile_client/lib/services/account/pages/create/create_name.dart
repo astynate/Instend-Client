@@ -28,11 +28,11 @@ class CreateNamePage extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: AccountSimpleInput(placeholder: "Name", onChanged: (text) {
                       accountServiceState.changeName(text);
-                    }),
+                    }, defaultValue: accountServiceState.newUser.name),
                   ),
                   AccountSimpleInput(placeholder: "Surname", onChanged: (text) {
                     accountServiceState.changeSurname(text);
-                  }),
+                  }, defaultValue: accountServiceState.newUser.surname),
                 ],
               ),
             ]),

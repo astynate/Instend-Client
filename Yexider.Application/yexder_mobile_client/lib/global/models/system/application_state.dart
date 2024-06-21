@@ -1,23 +1,24 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
-import 'package:mobx/mobx.dart';
-import 'dart:collection';
 
-part 'application_state.g.dart';
-
-class ApplicationState = ApplicationStateBase with _$ApplicationState;
-
-abstract class ApplicationStateBase with Store {
-  @observable
-  late Queue<YexiderSystemError> errorQueue = Queue<YexiderSystemError>();
-
-  @action
-  void addErrorInQueue(String title, String errorMessage, int? levelValue) {
-    errorQueue.add(YexiderSystemError(title, errorMessage, levelValue));
-  }
-
-  @action
-  YexiderSystemError removeErrorFromQueue() {
-    return errorQueue.first;
+class ApplicationState {
+  void showError(BuildContext context, YexiderSystemError error) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(error.title, style: const TextStyle(color: Colors.white),),
+        content: Text(error.message, style: const TextStyle(color: Color.fromARGB(255, 177, 177, 177)),),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Ok', style: TextStyle(color: CupertinoColors.activeBlue),),
+          ),
+        ],
+      ),
+    );
   }
 }
 

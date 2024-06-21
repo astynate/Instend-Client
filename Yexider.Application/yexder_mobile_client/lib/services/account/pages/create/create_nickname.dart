@@ -26,7 +26,7 @@ class CreateNicknamePage extends StatelessWidget {
                 children: [
                   AccountSimpleInput(placeholder: "Nickname", onChanged: (text) {
                     accountServiceState.changeNickname(text);
-                  }),
+                  }, defaultValue: accountServiceState.newUser.nickname),
                 ],
               ),
             ]),
