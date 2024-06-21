@@ -48,7 +48,7 @@ class CreateNamePage extends StatelessWidget {
                         ValidateHandler.validateString(accountServiceState.newUser.surname.toString(), 20) == true) 
                     {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return CreatePasswordPage();
+                        return const CreatePasswordPage();
                       }));
                     }
                   },

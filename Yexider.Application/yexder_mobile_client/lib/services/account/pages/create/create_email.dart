@@ -40,7 +40,7 @@ class CreateEmailPage extends StatelessWidget {
                   onPressed: () {
                     if (ValidateHandler.validateEmail(accountServiceState.newUser.email.toString()) == true) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return CreateNicknamePage();
+                        return const CreateNicknamePage();
                       }));
                     }
                   },

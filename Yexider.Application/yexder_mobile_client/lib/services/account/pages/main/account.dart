@@ -17,6 +17,21 @@ class AccountPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
+          // Center(
+          //   child: CupertinoAlertDialog(
+          //       title: const Text('Alert'),
+          //       content: const Text('Proceed with destructive action?'),
+          //       actions: <CupertinoDialogAction> [
+          //         CupertinoDialogAction(
+          //           isDefaultAction: true,
+          //           onPressed: () {
+                      
+          //           },
+          //           child: const Text('Ok'),
+          //         ),
+          //       ],
+          //     ),
+          // ),
           const AccountHeader(
             title: "Collections, Music, Gallery.\n Only in Yexider.", 
             widgets: [],
@@ -43,7 +58,7 @@ class AccountPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CreateEmailPage(),
+                    builder: (context) => const CreateEmailPage(),
                   ),
                 );
               }

@@ -84,6 +84,17 @@ mixin _$AccountServiceState on AccountServiceStateBase, Store {
   }
 
   @override
+  void changeEmail(String value) {
+    final _$actionInfo = _$AccountServiceStateBaseActionController.startAction(
+        name: 'AccountServiceStateBase.changeEmail');
+    try {
+      return super.changeEmail(value);
+    } finally {
+      _$AccountServiceStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 newUser: ${newUser}

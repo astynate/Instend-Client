@@ -9,9 +9,9 @@ class AccountPageTitle extends StatelessWidget {
   const AccountPageTitle({
     super.key,
     required this.text,
-    this.fontSize = 28.0,
+    this.fontSize = 24.0,
     this.color = const Color.fromARGB(255, 255, 255, 255),
-    this.fontWeight = FontWeight.bold,
+    this.fontWeight = FontWeight.w600,
   });
 
   @override

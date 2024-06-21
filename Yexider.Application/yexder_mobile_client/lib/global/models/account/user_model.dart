@@ -5,6 +5,7 @@ class UserModel {
   late String _name;
   late String _surname;
   late String _nickname;
+  late String _email;
   late double _balance;
   late int _countFriends;
   late String _avatar;
@@ -15,6 +16,7 @@ class UserModel {
     String name, 
     String surname, 
     String nickname, 
+    String email,
     double balance,
     int countFriends,
     String avatar,
@@ -25,6 +27,7 @@ class UserModel {
     _surname = surname;
     _nickname = nickname;
     _balance = balance;
+    _email = email;
     _countFriends = countFriends;
     _avatar = avatar;
     _header = header;
@@ -35,6 +38,7 @@ class UserModel {
     String name,
     String surname, 
     String nickname, 
+    String email,
     double balance,
     int countFriends,
     String avatar,
@@ -62,10 +66,22 @@ class UserModel {
       name, 
       surname, 
       nickname, 
+      email,
       balance, 
       countFriends, 
       avatar, 
       header
     ));
   }
+
+  Map<String, dynamic> toJson() => {
+    'name': _name,
+    'surname': _surname,
+    'nickname': _nickname,
+    'email': _email,
+    'balance': _balance,
+    'countFriends': _countFriends,
+    'avatar': _avatar,
+    'header': _header,
+  };
 }

@@ -27,7 +27,7 @@ class AccountHeader extends StatelessWidget {
               children: [
                 AccountPageTitle(text: title),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Column(children: widgets)
                 ),
               ],

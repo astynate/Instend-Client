@@ -14,7 +14,7 @@ class AccountFooter extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 15.0),
           child: Column(
             children: children.map((child) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
+              padding: const EdgeInsets.only(bottom: 5),
               child: child,
             )).toList(),
           ),

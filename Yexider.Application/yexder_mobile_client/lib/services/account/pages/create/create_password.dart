@@ -1,16 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
-import 'package:yexder_mobile_client/global/models/transfer/user_transfer_model.dart';
+import 'package:yexder_mobile_client/services/account/api/create/create_account_requests_api.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
 import 'package:yexder_mobile_client/services/account/state/account_sevice_state.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
-import 'package:http/http.dart' as http;
 
 class CreatePasswordPage extends StatelessWidget {
   const CreatePasswordPage({super.key});
@@ -52,19 +48,8 @@ class CreatePasswordPage extends StatelessWidget {
                         ValidateHandler.validatePassword(accountServiceState.newUser.confirmPassword.toString()) == true && 
                         accountServiceState.newUser.password.toString() == accountServiceState.newUser.confirmPassword.toString()
                     ) 
-                    {
-                      // var result = await httpClient.post('/accounts', null, {'user': accountServiceState.newUser});
-                      
-                      final newUserJson = jsonEncode(accountServiceState.newUser);
-
-                      http.post(Uri.parse('http://localhost:5000/accounts'), body: newUserJson);
-
-                      // if (result.isSuccess == true) {
-                      //   print("!");
-                      //   print(result.value?.body);
-                      // } else {
-                      //   print(result.error);
-                      // }
+                    {                      
+                      await CreateAccountAPI.createAccount(accountServiceState.newUser);
                     }
                   },
                 ),

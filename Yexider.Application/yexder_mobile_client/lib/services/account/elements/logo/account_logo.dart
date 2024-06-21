@@ -16,8 +16,8 @@ class AccountLogo extends StatelessWidget {
       child: SvgPicture.asset(
         "assets/icons/company-logo.svg",
         semanticsLabel: "Yexider Logo",
-        width: 80.0,
-        height: 80.0,
+        width: 75.0,
+        height: 75.0,
       ),
     );
   }

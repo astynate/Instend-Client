@@ -9,7 +9,7 @@ class AccountSimpleInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.85,
+      width: MediaQuery.of(context).size.width * 0.9,
       child: TextFormField(
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(

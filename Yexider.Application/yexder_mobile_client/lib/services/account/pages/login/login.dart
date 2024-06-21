@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
@@ -46,9 +45,9 @@ class LoginPage extends StatelessWidget {
                   var response = await httpClient.get("/account");
                   
                   if (response.isSuccess) {
-                    print('Response status: ${response.value}');
+                    debugPrint('Response status: ${response.value}');
                   } else {
-                    print(response.error);
+                    debugPrint(response.error);
                   }
               }
             ),

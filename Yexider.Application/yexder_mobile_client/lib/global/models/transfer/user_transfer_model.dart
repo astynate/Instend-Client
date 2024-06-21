@@ -5,4 +5,12 @@ class UserTranferModel {
   String? nickname;
   String? password;
   String? confirmPassword;
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'surname': surname,
+    'nickname': nickname,
+    'email': email,
+    'password': password,
+  };
 }
