@@ -37,7 +37,6 @@ class AuthorizationPageState extends State<AuthorizationPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.black,
       body: Center( 
         child: Column(
           children: <Widget> [
@@ -46,13 +45,6 @@ class AuthorizationPageState extends State<AuthorizationPage> {
               color: Colors.white,
             ),
             SizedBox(width: 50),
-            // Padding(padding: EdgeInsets.only(top: 5)),
-            // Text('Loading', 
-            //   style: TextStyle(
-            //     color: Color.fromARGB(255, 49, 49, 49),
-            //     fontWeight: FontWeight.bold
-            //   ),
-            // ),
             Spacer(),
           ]
         )

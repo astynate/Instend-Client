@@ -11,7 +11,6 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,10 +24,8 @@ class AccountPage extends StatelessWidget {
           AccountFooter(children: [
             MainAccountButton(
               text: "Login", 
-              textColor: 
-              Colors.black, 
-              backgroundColor: 
-              Colors.white, 
+              textColor: Colors.black, 
+              backgroundColor: Colors.white, 
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const ConfirmEmailPage();

@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class CodeInputField extends StatelessWidget {
   final Function(String value) setString;
   final List<String> code = List.generate(6, (index) => '');
+  final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
 
   CodeInputField({super.key, required this.setString});
 
@@ -17,24 +18,36 @@ class CodeInputField extends StatelessWidget {
             for (int i = 0; i < 6; i++)
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(right: i == 5 ? 0 : 10),
+                  padding: const EdgeInsets.only(right: 10),
                   child: SizedBox(
                     child: TextField(
+                      focusNode: focusNodes[i],
                       onChanged: (value) {
                         code[i] = value;
-                        debugPrint(code.join(''));
+                        setString(code.join(''));
+
+                        if (value.isEmpty) {
+                          if (i > 0) {
+                            FocusScope.of(context).requestFocus(focusNodes[i - 1]);
+                          }
+                        } else {
+                          if (i < 5) {
+                            FocusScope.of(context).requestFocus(focusNodes[i + 1]);
+                          }
+                        }
                       },
-                      textCapitalization: TextCapitalization.sentences,
+                      // textCapitalization: TextCapitalization.sentences,
                       maxLength: 1,
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
+                        counterText: '',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           borderSide: BorderSide(color: Colors.red),
                         ),
-                        labelStyle: TextStyle(color: Color.fromARGB(120, 255, 255, 255)),
-                        hintStyle: TextStyle(color: Color.fromARGB(120, 255, 255, 255)),
+                        labelStyle: TextStyle(color: Color.fromARGB(120, 0, 0, 0)),
+                        hintStyle: TextStyle(color: Color.fromARGB(120, 0, 0, 0)),
                       ),
                     ),
                   ),

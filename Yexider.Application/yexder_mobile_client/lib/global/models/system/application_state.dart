@@ -6,17 +6,38 @@ class ApplicationState {
   void showError(BuildContext context, YexiderSystemError error) {
     showDialog<void>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(error.title, style: const TextStyle(color: Colors.white),),
-        content: Text(error.message, style: const TextStyle(color: Color.fromARGB(255, 177, 177, 177)),),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Ok', style: TextStyle(color: CupertinoColors.activeBlue),),
+      builder: (BuildContext context) {
+        return Center(
+          child: AlertDialog(
+            actionsPadding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+            buttonPadding: const EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
+            contentPadding: const EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
+            backgroundColor: const Color.fromARGB(255, 48, 48, 48),
+            title: Text(error.title, style: const TextStyle(color: Colors.white), textAlign: TextAlign.center),
+            content: Text(error.message, style: const TextStyle(color: Color.fromARGB(255, 177, 177, 177)), textAlign: TextAlign.center),
+            actions: <Widget>[
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Ok', style: TextStyle(color: CupertinoColors.activeBlue)),
+                ),
+              ),
+            ],
           ),
-        ],
+        );
+      },
+    );
+  }
+
+  void showAttentionMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(message),
+        showCloseIcon: true,
+        duration: const Duration(seconds: 3),
       ),
     );
   }

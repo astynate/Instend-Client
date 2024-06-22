@@ -5,8 +5,8 @@ import 'package:yexder_mobile_client/global/models/system/error.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 import 'package:yexder_mobile_client/services/account/api/create/create_account_requests_api.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
-import 'package:yexder_mobile_client/services/account/elements/inputs/password/account_password_input.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
+import 'package:yexder_mobile_client/services/account/pages/confirmation/confirm_email.dart';
 import 'package:yexder_mobile_client/services/account/state/account_sevice_state.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
@@ -16,6 +16,8 @@ class CreatePasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = true;
+
     return Observer(
       builder: (context) => Scaffold(
         backgroundColor: Colors.black,
@@ -28,15 +30,26 @@ class CreatePasswordPage extends StatelessWidget {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: AccountSimpleInput(placeholder: "Password", onChanged: (text) {
-                      accountServiceState.changePassword(text);
-                    }, defaultValue: accountServiceState.newUser.password),
+                    padding: const EdgeInsets.only(bottom: 7.0),
+                    child: AccountSimpleInput(
+                      placeholder: "Password", 
+                      onChanged: (text) {
+                        accountServiceState.changePassword(text);
+                      }, 
+                      defaultValue: accountServiceState.newUser.password,
+                      type: TextInputType.visiblePassword,
+                      isObscured: true,
+                    ),
                   ),
-                  AccountSimpleInput(placeholder: "Confirm password", onChanged: (text) {
-                    accountServiceState.changeConfirmPassword(text);
-                  }, defaultValue: accountServiceState.newUser.confirmPassword),
-                  const AccountPasswordField()
+                  AccountSimpleInput(
+                    placeholder: "Confirm password", 
+                    onChanged: (text) {
+                      accountServiceState.changeConfirmPassword(text);
+                    }, 
+                    defaultValue: accountServiceState.newUser.confirmPassword,
+                    type: TextInputType.visiblePassword,
+                    isObscured: true,
+                  ),
                 ],
               ),
             ]),
@@ -48,16 +61,35 @@ class CreatePasswordPage extends StatelessWidget {
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
                   onPressed: () async {
-                    if (ValidateHandler.validatePassword(accountServiceState.newUser.password.toString()) == true &&
-                        ValidateHandler.validatePassword(accountServiceState.newUser.confirmPassword.toString()) == true && 
-                        accountServiceState.newUser.password.toString() == accountServiceState.newUser.confirmPassword.toString()
-                    ) 
-                    {                      
-                      var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
+                    if (ValidateHandler.validatePassword(accountServiceState.newUser.password.toString()) == false) {
+                      applicationState.showAttentionMessage(context, "Invalid password");
+                      return;
+                    }
 
-                      if (result.isFailure) {
-                        applicationState.showError(context, YexiderSystemError("Attention", result.error));
-                      }
+                    if (ValidateHandler.validatePassword(accountServiceState.newUser.confirmPassword.toString()) == false) {
+                      applicationState.showAttentionMessage(context, "Passwords must be the same.");
+                      return;
+                    }
+
+                    isLoading = true;
+
+                    var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
+                    debugPrint(result.value.toString());
+
+                    isLoading = false;
+                    
+                    String body = result.value?.body ?? "";
+
+                    if (!context.mounted) return;
+
+                    if (result.isFailure || (result.isSuccess && accountServiceState.guidRegexExpression.hasMatch(body) == false)) {
+                      applicationState.showError(context, YexiderSystemError("Attention", result.error));
+                    } else if (context.mounted) {
+                      accountServiceState.setConfimationLink(body);
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const ConfirmEmailPage();
+                      }));
                     }
                   },
                 ),

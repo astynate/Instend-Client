@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
@@ -24,9 +25,14 @@ class CreateEmailPage extends StatelessWidget {
             AccountHeader(title: "Create an Yexider ID", widgets: [
               Column(
                 children: [
-                  AccountSimpleInput(placeholder: "Email", onChanged: (text) {
-                    accountServiceState.changeEmail(text);
-                  }, defaultValue: accountServiceState.newUser.email),
+                  AccountSimpleInput(
+                    placeholder: "Email", 
+                    onChanged: (text) {
+                      accountServiceState.changeEmail(text);
+                    }, 
+                    defaultValue: accountServiceState.newUser.email,
+                    type: TextInputType.emailAddress,
+                  ),
                 ],
               ),
             ]),
@@ -42,6 +48,9 @@ class CreateEmailPage extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const CreateNicknamePage();
                       }));
+                    } else {
+                      applicationState.showAttentionMessage(context, 
+                        "Invalid email! example@gmail.com");
                     }
                   },
                 ),

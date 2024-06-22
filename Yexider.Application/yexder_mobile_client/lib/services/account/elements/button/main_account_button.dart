@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainAccountButton extends StatelessWidget {
@@ -5,13 +6,15 @@ class MainAccountButton extends StatelessWidget {
   final Color textColor;
   final Color backgroundColor;
   final VoidCallback onPressed;
+  late bool isLoading;
 
-  const MainAccountButton({
-    super.key,
+  MainAccountButton({
+    super.key, 
     required this.text,
     required this.textColor,
     required this.backgroundColor,
     required this.onPressed,
+    this.isLoading = false
   });
 
   @override
@@ -22,12 +25,15 @@ class MainAccountButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         minimumSize: Size(MediaQuery.of(context).size.width * 0.90, 55),
       ),
-      onPressed: onPressed,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),
-      ),
+      onPressed: () { if (isLoading == true) return; onPressed(); },
+      child: isLoading == false ?
+        Text(
+          text,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),
+        )
+      :
+        CupertinoActivityIndicator(color: textColor),
     );
   }
 }
