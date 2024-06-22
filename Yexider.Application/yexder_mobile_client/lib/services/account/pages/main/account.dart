@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
+import 'package:yexder_mobile_client/services/account/pages/confirmation/confirm_email.dart';
 import 'package:yexder_mobile_client/services/account/pages/create/create_email.dart';
-import 'package:yexder_mobile_client/services/account/pages/login/login.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
@@ -17,21 +17,6 @@ class AccountPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
-          // Center(
-          //   child: CupertinoAlertDialog(
-          //       title: const Text('Alert'),
-          //       content: const Text('Proceed with destructive action?'),
-          //       actions: <CupertinoDialogAction> [
-          //         CupertinoDialogAction(
-          //           isDefaultAction: true,
-          //           onPressed: () {
-                      
-          //           },
-          //           child: const Text('Ok'),
-          //         ),
-          //       ],
-          //     ),
-          // ),
           const AccountHeader(
             title: "Collections, Music, Gallery.\n Only in Yexider.", 
             widgets: [],
@@ -46,7 +31,7 @@ class AccountPage extends StatelessWidget {
               Colors.white, 
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return LoginPage();
+                  return const ConfirmEmailPage();
                 }));
               }
             ),

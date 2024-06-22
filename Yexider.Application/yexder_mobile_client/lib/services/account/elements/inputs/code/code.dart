@@ -1,45 +1,46 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-class CodeInputField extends StatefulWidget {
-  const CodeInputField({super.key});
+class CodeInputField extends StatelessWidget {
+  final Function(String value) setString;
+  final List<String> code = List.generate(6, (index) => '');
 
-  @override
-  CodeInputFieldState createState() => CodeInputFieldState();
-}
-
-class CodeInputFieldState extends State<CodeInputField> {
-  List<String> code = List<String>.filled(6, '');
+  CodeInputField({super.key, required this.setString});
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTextField(
-      decoration: BoxDecoration(
-        border: Border.all(color: CupertinoColors.systemGrey),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      padding: const EdgeInsets.all(8.0),
-      maxLength: 6,
-      keyboardType: TextInputType.number,
-      onChanged: (value) {
-        setState(() {
-          if (value.length <= 6) {
-            code = value.split('');
-          }
-        });
-      },
-      // buildCounter: (BuildContext context,
-      //     {required int currentLength, required int maxLength, required bool isFocused}) => null,
-      cursorColor: CupertinoColors.activeBlue,
-      style: const TextStyle(fontSize: 18.0),
-      textAlign: TextAlign.center,
-      textInputAction: TextInputAction.done,
-      obscureText: true,
-      autocorrect: false,
-      enableSuggestions: false,
-      controller: TextEditingController.fromValue(
-        TextEditingValue(
-          text: code.join(),
-          selection: TextSelection.collapsed(offset: code.length),
+    return Observer(
+      builder: (BuildContext context) => SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+        child: Row(
+          children: [
+            for (int i = 0; i < 6; i++)
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: i == 5 ? 0 : 10),
+                  child: SizedBox(
+                    child: TextField(
+                      onChanged: (value) {
+                        code[i] = value;
+                        debugPrint(code.join(''));
+                      },
+                      textCapitalization: TextCapitalization.sentences,
+                      maxLength: 1,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                        labelStyle: TextStyle(color: Color.fromARGB(120, 255, 255, 255)),
+                        hintStyle: TextStyle(color: Color.fromARGB(120, 255, 255, 255)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );

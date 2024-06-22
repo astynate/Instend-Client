@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yexder_mobile_client/services/proxy/pages/authorization/authorization.dart';
@@ -7,16 +8,20 @@ void main() {
 }
 
 class YexiderApplication extends StatelessWidget {
+  final MaterialColor color = MaterialColor(1, Mapconst <int, Color> {0, Colors.white});
+
   const YexiderApplication({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        textTheme: GoogleFonts.openSansTextTheme(
-          Theme.of(context).textTheme,
-        ),
+      darkTheme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
+          .copyWith(
+            secondary: Colors.white,
+            brightness: Brightness.dark,
+          ),
       ),
       home: const AuthorizationPage(),
     );
