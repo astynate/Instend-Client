@@ -1,8 +1,11 @@
 import 'dart:core';
 import 'package:http/http.dart' as http;
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/global/models/system/result.dart';
 
 enum YexiderContentTypes {
+  none(''),
+
   textPlain('text/plain'),
   textHtml('text/html'),
   textCss('text/css'),
@@ -48,13 +51,19 @@ enum YexiderContentTypes {
 }
 
 class YexiderHttpClient {
+  static const int _timeOut = 7;
   static const String _baseUrl = "http://10.0.2.2:5000"; // Web: "http://localhost:5000" | Emulator: "http://10.0.2.2:5000"
 
-  static Map<String, String> _getHeaders(Map<String, String>? headers, YexiderContentTypes? contentType) {
+  static Future<Map<String, String>> _getHeaders(Map<String, String>? headers, YexiderContentTypes? contentType) async {
     Map<String, String> combinedHeaders = {
-      'Authorization': 'Bearer token',
-      'Content-Type': contentType != null ? contentType.value : YexiderContentTypes.applicationJson.value
+      'Authorization': 'Bearer ${await secureStorage.read(key: 'system_access_token')}',
+      'Content-Type': contentType != null ? contentType.value : YexiderContentTypes.applicationJson.value,
+      'Cookie:': 'system_refresh_token=${await secureStorage.read(key: 'system_refresh_token')}'
     };
+
+    if (contentType == YexiderContentTypes.none) {
+      combinedHeaders.remove('Content-Type');
+    }
 
     if (headers != null) {
       combinedHeaders.addAll(headers);
@@ -65,9 +74,12 @@ class YexiderHttpClient {
 
   Future<Result<http.Response>> get(String url, {Map<String, String>? headers}) async {
     try {
-      return Result<http.Response>()
-        .success(await http.get(Uri.parse(_baseUrl + url), headers: _getHeaders(headers, null)));
-    } catch (exception) {
+      http.Response response = await http.get(Uri.parse(_baseUrl + url), headers: await _getHeaders(headers, null))
+        .timeout(const Duration(seconds: _timeOut));
+
+      return Result<http.Response>().success(response); 
+    } 
+    catch (exception) {
       return Result<http.Response>()
         .failure(exception.toString());
     }
@@ -80,9 +92,12 @@ class YexiderHttpClient {
     YexiderContentTypes? contentType,
   }) async {
     try {
-      return Result<http.Response>()
-        .success(await http.post(Uri.parse(_baseUrl + url), headers: _getHeaders(headers, contentType), body: object));
-    } catch (exception) {
+      http.Response response = await http.post(Uri.parse(_baseUrl + url), headers: await _getHeaders(headers, contentType), body: object)
+        .timeout(const Duration(seconds: _timeOut));
+
+      return Result<http.Response>().success(response); 
+    }
+    catch (exception) {
       return Result<http.Response>()
         .failure(exception.toString());
     }
@@ -90,9 +105,12 @@ class YexiderHttpClient {
 
   Future<Result<http.Response>> put(String url, {Map<String, String>? headers}) async {
     try {
-      return Result<http.Response>()
-        .success(await http.put(Uri.parse(_baseUrl + url), headers: _getHeaders(headers, null)));
-    } catch (exception) {
+      http.Response response = await http.put(Uri.parse(_baseUrl + url), headers: await  _getHeaders(headers, null))
+        .timeout(const Duration(seconds: _timeOut));
+
+      return Result<http.Response>().success(response); 
+    } 
+    catch (exception) {
       return Result<http.Response>()
         .failure(exception.toString());
     }
@@ -100,9 +118,12 @@ class YexiderHttpClient {
 
   Future<Result<http.Response>> delete(String url, {Map<String, String>? headers}) async {
     try {
-      return Result<http.Response>()
-        .success(await http.delete(Uri.parse(_baseUrl + url), headers: _getHeaders(headers, null)));
-    } catch (exception) {
+      http.Response response = await http.delete(Uri.parse(_baseUrl + url), headers: await  _getHeaders(headers, null))
+        .timeout(const Duration(seconds: _timeOut));
+
+      return Result<http.Response>().success(response); 
+    } 
+    catch (exception) {
       return Result<http.Response>()
         .failure(exception.toString());
     }

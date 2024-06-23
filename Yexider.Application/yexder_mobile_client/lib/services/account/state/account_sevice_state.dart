@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 import 'package:yexder_mobile_client/global/models/transfer/user_transfer_model.dart';
 
 part 'account_sevice_state.g.dart';
@@ -6,8 +7,6 @@ part 'account_sevice_state.g.dart';
 class AccountServiceState = AccountServiceStateBase with _$AccountServiceState;
 
 abstract class AccountServiceStateBase with Store {
-  RegExp guidRegexExpression = RegExp(r'[({]?[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}[})]?');
-  
   @observable
   UserTranferModel newUser = UserTranferModel();
 
@@ -40,7 +39,7 @@ abstract class AccountServiceStateBase with Store {
 
   @action
   void setConfimationLink(String value) {
-    if (accountServiceState.guidRegexExpression.hasMatch(value) == true) {
+    if (ValidateHandler.validateGuid(value)) {
       confirmationLink = value;
     }
   }

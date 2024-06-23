@@ -1,4 +1,6 @@
 class ValidateHandler {
+  static RegExp guidRegexExpression = RegExp(r'[({]?[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}[})]?');
+
   static bool validateString(String? value, int maxLength) {
     if (value == null || value == "null" || value == '') {
       return false;
@@ -9,6 +11,10 @@ class ValidateHandler {
     }
 
     return true;
+  }
+
+  static bool validateGuid(String value) {
+    return guidRegexExpression.hasMatch(value) == true;
   }
 
   static bool validateEmail(String value) {

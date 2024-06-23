@@ -11,13 +11,24 @@ import 'package:yexder_mobile_client/services/account/state/account_sevice_state
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
-class CreatePasswordPage extends StatelessWidget {
+class CreatePasswordPage extends StatefulWidget {
   const CreatePasswordPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    bool isLoading = true;
+  CreatePasswordPageState createState() => CreatePasswordPageState();
+}
 
+class CreatePasswordPageState extends State<CreatePasswordPage> {
+  bool isLoading = false;
+
+  void setLoadingState(bool state) {
+    setState(() {
+      isLoading = state;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Scaffold(
         backgroundColor: Colors.black,
@@ -60,6 +71,7 @@ class CreatePasswordPage extends StatelessWidget {
                   text: "Next",
                   textColor: Colors.black,
                   backgroundColor: Colors.white,
+                  isLoading: isLoading,
                   onPressed: () async {
                     if (ValidateHandler.validatePassword(accountServiceState.newUser.password.toString()) == false) {
                       applicationState.showAttentionMessage(context, "Invalid password");
@@ -71,20 +83,21 @@ class CreatePasswordPage extends StatelessWidget {
                       return;
                     }
 
-                    isLoading = true;
-
+                    setLoadingState(true);
                     var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
-                    debugPrint(result.value.toString());
-
-                    isLoading = false;
+                    setLoadingState(false);
                     
                     String body = result.value?.body ?? "";
 
                     if (!context.mounted) return;
 
-                    if (result.isFailure || (result.isSuccess && accountServiceState.guidRegexExpression.hasMatch(body) == false)) {
+                    if ((result.isFailure == true) || 
+                        (result.isSuccess && result.value!.statusCode != 200) || 
+                        (result.isSuccess && ValidateHandler.validateGuid(body) == false)) 
+                    {
                       applicationState.showError(context, YexiderSystemError("Attention", result.error));
-                    } else if (context.mounted) {
+                    } 
+                    else if (context.mounted) {
                       accountServiceState.setConfimationLink(body);
 
                       Navigator.push(context, MaterialPageRoute(builder: (context) {

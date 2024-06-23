@@ -9,8 +9,15 @@ import 'package:yexder_mobile_client/services/account/state/account_sevice_state
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
-class ConfirmEmailPage extends StatelessWidget {
+class ConfirmEmailPage extends StatefulWidget {
   const ConfirmEmailPage({super.key});
+
+  @override
+  ConfirmEmailPageState createState() => ConfirmEmailPageState();
+}
+
+class ConfirmEmailPageState extends State<ConfirmEmailPage> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +45,26 @@ class ConfirmEmailPage extends StatelessWidget {
               Colors.black, 
               backgroundColor: 
               Colors.white, 
+              isLoading: isLoading,
               onPressed: () async {
-                var response = await httpClient.post('/confirmations?link=${accountServiceState.confirmationLink}&code=${accountServiceState.confirmationCode}');
+                setState(() {
+                  isLoading = true;
+                });
+
+                var response = await httpClient.post('/confirmations?link=${accountServiceState.confirmationLink}&code=${
+                  accountServiceState.confirmationCode}', contentType: YexiderContentTypes.none);
+
+                setState(() {
+                  isLoading = false;
+                });
                 
                 if (!context.mounted) return;
 
-                if (response.isSuccess) {
+                if (response.isSuccess && response.value!.statusCode == 200) {
+                  applicationState.showAttentionMessage(context, "Email successfully confirmed");
+
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return LoginPage();
+                    return const LoginPage();
                   }));
                 } else {
                   applicationState.showError(context, YexiderSystemError('Attention!', response.error));

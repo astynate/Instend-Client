@@ -1,8 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobx/mobx.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
 
-class ApplicationState {
+part 'application_state.g.dart';
+
+class ApplicationState = ApplicationServiceState with _$ApplicationState;
+
+abstract class ApplicationServiceState with Store {
+  @observable
+  int currentIndex = 0;
+
   void showError(BuildContext context, YexiderSystemError error) {
     showDialog<void>(
       context: context,
@@ -41,6 +50,12 @@ class ApplicationState {
       ),
     );
   }
+
+  @action
+  void setCurrentIndex(int index) {
+    currentIndex = index;
+  }
 }
 
 ApplicationState applicationState = ApplicationState();
+FlutterSecureStorage secureStorage = const FlutterSecureStorage();
