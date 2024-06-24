@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/proxy/pages/authorization/authorization.dart';
 
 void main() {
