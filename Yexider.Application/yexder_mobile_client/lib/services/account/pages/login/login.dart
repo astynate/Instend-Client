@@ -11,7 +11,6 @@ import 'package:yexder_mobile_client/services/account/pages/confirmation/confirm
 import 'package:yexder_mobile_client/services/account/state/account_sevice_state.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
-import 'package:yexder_mobile_client/services/cloud/layout/layout.dart';
 import 'package:yexder_mobile_client/services/proxy/pages/authorization/authorization.dart';
 
 class LoginPage extends StatefulWidget {
