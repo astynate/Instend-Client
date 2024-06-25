@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
+import 'package:yexder_mobile_client/services/cloud/elements/navigation_button/navigation_button.dart';
 
 class NavigationPanel extends StatelessWidget {
   const NavigationPanel({super.key});
@@ -15,10 +16,7 @@ class NavigationPanel extends StatelessWidget {
           applicationState.setCurrentIndex(index);
         },
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
+          NavigationButton(),
           BottomNavigationBarItem(
             icon: Icon(Icons.ac_unit_outlined),
             label: '',
