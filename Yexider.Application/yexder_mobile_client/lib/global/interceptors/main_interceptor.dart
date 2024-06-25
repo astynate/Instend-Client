@@ -58,7 +58,7 @@ class YexiderHttpClient {
     Map<String, String> combinedHeaders = {
       'Authorization': 'Bearer ${await secureStorage.read(key: 'system_access_token')}',
       'Content-Type': contentType != null ? contentType.value : YexiderContentTypes.applicationJson.value,
-      'Cookie:': 'system_refresh_token=${await secureStorage.read(key: 'system_refresh_token')}'
+      'Cookie': 'system_refresh_token=${await secureStorage.read(key: 'system_refresh_token')}'
     };
 
     if (contentType == YexiderContentTypes.none) {

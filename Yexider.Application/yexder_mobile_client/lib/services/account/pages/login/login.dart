@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
+import 'package:yexder_mobile_client/global/models/system/request_handler.dart';
 import 'package:yexder_mobile_client/global/models/system/validate_handler.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
 import 'package:yexder_mobile_client/services/account/elements/inputs/simple/account_simple_input.dart';
@@ -101,7 +100,9 @@ class LoginPageState extends State<LoginPage> {
 
                   if (response.value?.statusCode == 200) {
                     await secureStorage.write(key: 'system_access_token', value: response.value!.body);
-                    await secureStorage.write(key: 'system_refresh_token', value: response.value?.headers['system_refresh_token']);
+                    await secureStorage.write(key: 'system_refresh_token', value: RequestHandler.getCookieValue(response.value!.headers['set-cookie'], 'system_refresh_token'));
+
+                    debugPrint(await secureStorage.read(key: 'system_refresh_token'));
 
                     if (!context.mounted) return;
 
