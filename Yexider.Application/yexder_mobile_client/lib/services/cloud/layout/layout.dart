@@ -25,7 +25,7 @@ class Layout extends StatelessWidget {
       builder: (context) {
         return Scaffold(
           body: _pages[applicationState.currentIndex],
-          bottomNavigationBar: const NavigationPanel()
+          bottomNavigationBar: const YexiderNavigationPanel()
         );
       }
     );

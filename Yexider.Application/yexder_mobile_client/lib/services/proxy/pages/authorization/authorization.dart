@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
+import 'package:yexder_mobile_client/global/models/account/friend_model.dart';
+import 'package:yexder_mobile_client/global/models/account/user_model.dart';
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/account/pages/main/account.dart';
 import 'package:yexder_mobile_client/services/cloud/layout/layout.dart';
+import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
 
 class AuthorizationPage extends StatefulWidget {
   const AuthorizationPage({super.key});
@@ -18,16 +23,28 @@ class AuthorizationPageState extends State<AuthorizationPage> {
     if (!context.mounted) return;
 
     if (response.isSuccess == true && response.value?.statusCode == 200) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Layout()),
-      );
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const AccountPage()),
-      );
+      List<dynamic> result = jsonDecode(response.value?.body ?? "") ?? List<dynamic>;
+
+      if (result.length == 3) {
+        UserModel user = UserModel.fromMap(result[0]);
+        userState.setUser(user);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Layout()),
+        );
+
+        return;
+      }
+
+      debugPrint(userState.user?.name.toString());
+      debugPrint(userState.friends?[0].toString());
     }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const AccountPage()),
+    );
   }
 
   @override

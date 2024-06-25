@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yexder_mobile_client/services/cloud/widgets/main_header/main_header.dart';
 
 class HomePageLayout extends StatelessWidget {
   const HomePageLayout({super.key});
@@ -6,8 +7,9 @@ class HomePageLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Yexider Home'),
+      appBar:  PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        child: const YexiderHeader(title: "Home"),
       ),
       body: SingleChildScrollView(
         child: Padding(

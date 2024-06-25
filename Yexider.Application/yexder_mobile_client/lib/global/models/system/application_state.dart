@@ -51,6 +51,33 @@ abstract class ApplicationServiceState with Store {
     );
   }
 
+  void showModalBottomPanel(BuildContext context) {
+    Scaffold.of(context).showBottomSheet(
+      elevation: 99999,
+      (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height,
+          color: Theme.of(context).colorScheme.onSecondary,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text('BottomSheet'),
+                ElevatedButton(
+                  child: const Text('Close BottomSheet'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @action
   void setCurrentIndex(int index) {
     currentIndex = index;
