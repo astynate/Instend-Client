@@ -24,6 +24,38 @@ mixin _$UserState on UserStateBase, Store {
     });
   }
 
+  late final _$friendsAtom =
+      Atom(name: 'UserStateBase.friends', context: context);
+
+  @override
+  List<FriendModel>? get friends {
+    _$friendsAtom.reportRead();
+    return super.friends;
+  }
+
+  @override
+  set friends(List<FriendModel>? value) {
+    _$friendsAtom.reportWrite(value, super.friends, () {
+      super.friends = value;
+    });
+  }
+
+  late final _$communitiesAtom =
+      Atom(name: 'UserStateBase.communities', context: context);
+
+  @override
+  List<String>? get communities {
+    _$communitiesAtom.reportRead();
+    return super.communities;
+  }
+
+  @override
+  set communities(List<String>? value) {
+    _$communitiesAtom.reportWrite(value, super.communities, () {
+      super.communities = value;
+    });
+  }
+
   late final _$UserStateBaseActionController =
       ActionController(name: 'UserStateBase', context: context);
 
@@ -39,9 +71,33 @@ mixin _$UserState on UserStateBase, Store {
   }
 
   @override
+  void setFriends(List<FriendModel> friendsValue) {
+    final _$actionInfo = _$UserStateBaseActionController.startAction(
+        name: 'UserStateBase.setFriends');
+    try {
+      return super.setFriends(friendsValue);
+    } finally {
+      _$UserStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCommunities(List<String> communitiesValue) {
+    final _$actionInfo = _$UserStateBaseActionController.startAction(
+        name: 'UserStateBase.setCommunities');
+    try {
+      return super.setCommunities(communitiesValue);
+    } finally {
+      _$UserStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-user: ${user}
+user: ${user},
+friends: ${friends},
+communities: ${communities}
     ''';
   }
 }

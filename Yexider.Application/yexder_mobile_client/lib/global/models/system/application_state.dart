@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
+import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart';
+import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
 
 part 'application_state.g.dart';
 
@@ -11,6 +13,9 @@ class ApplicationState = ApplicationServiceState with _$ApplicationState;
 abstract class ApplicationServiceState with Store {
   @observable
   int currentIndex = 0;
+
+  @observable
+  bool isBottomPanelOpen = true;
 
   void showError(BuildContext context, YexiderSystemError error) {
     showDialog<void>(
@@ -52,34 +57,89 @@ abstract class ApplicationServiceState with Store {
   }
 
   void showModalBottomPanel(BuildContext context) {
+    setBottomPanelState(false);
+
     Scaffold.of(context).showBottomSheet(
       (BuildContext context) {
         return Container(
+          width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Theme.of(context).colorScheme.onSecondary,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text('BottomSheet'),
-                ElevatedButton(
-                  child: const Text('Close BottomSheet'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+          decoration: BoxDecoration(
+            border: const Border(top: BorderSide(color: Color.fromARGB(255, 88, 88, 88)),),
+            color: Theme.of(context).colorScheme.onSecondary,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(0.0),
+              topRight: Radius.circular(0.0),
             ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 16.0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    width: 40.0,
+                    height: 4.0,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        AvatarElement(
+                          base64String: userState.user?.avatar ?? "", 
+                          size: const Size(80, 80), 
+                          borderRadius: 100
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userState.user?.nickname ?? "Undefinded", 
+                                style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '${userState.user?.name} ${userState.user?.surname}',
+                                style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },
-    );
+    ).closed.then((value) {
+      setBottomPanelState(true);
+    });
   }
 
   @action
   void setCurrentIndex(int index) {
     currentIndex = index;
+  }
+
+  @action
+  void setBottomPanelState(bool state) {
+    isBottomPanelOpen = state;
   }
 }
 
