@@ -3,20 +3,44 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/navigation_button/navigation_button.dart';
 
-class YexiderNavigationPanel extends StatelessWidget {
-  const YexiderNavigationPanel({super.key});
+class YexiderNavigationPanel extends StatefulWidget {
+  final bool isOpen;
 
+  const YexiderNavigationPanel({super.key, required this.isOpen});
+
+  @override
+  State<YexiderNavigationPanel> createState() => _YexiderNavigationPanelState();
+}
+
+class _YexiderNavigationPanelState extends State<YexiderNavigationPanel> with TickerProviderStateMixin {
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = BottomSheet.createAnimationController(this);
+    controller.duration = const Duration(seconds: 1);
+    controller.reverseDuration = const Duration(seconds: 1);
+    controller.drive(CurveTween(curve: Curves.easeIn));
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Container(
         decoration: const BoxDecoration(
           border: Border(
-            top: BorderSide(width: 1, color: Color.fromARGB(255, 48, 48, 48)), // Adjust color as needed
+            top: BorderSide(width: 1, color: Color.fromARGB(255, 48, 48, 48)),
           ),
         ),
         child: BottomAppBar(
-          height: 56,
+          height: widget.isOpen ? 56 : 0,
           elevation: 0,
           color: const Color.fromARGB(255, 0, 0, 0),
           child: Row(

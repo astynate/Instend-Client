@@ -25,6 +25,22 @@ mixin _$ApplicationState on ApplicationServiceState, Store {
     });
   }
 
+  late final _$isBottomPanelOpenAtom =
+      Atom(name: 'ApplicationServiceState.isBottomPanelOpen', context: context);
+
+  @override
+  bool get isBottomPanelOpen {
+    _$isBottomPanelOpenAtom.reportRead();
+    return super.isBottomPanelOpen;
+  }
+
+  @override
+  set isBottomPanelOpen(bool value) {
+    _$isBottomPanelOpenAtom.reportWrite(value, super.isBottomPanelOpen, () {
+      super.isBottomPanelOpen = value;
+    });
+  }
+
   late final _$ApplicationServiceStateActionController =
       ActionController(name: 'ApplicationServiceState', context: context);
 
@@ -40,9 +56,21 @@ mixin _$ApplicationState on ApplicationServiceState, Store {
   }
 
   @override
+  void setBottomPanelState(bool state) {
+    final _$actionInfo = _$ApplicationServiceStateActionController.startAction(
+        name: 'ApplicationServiceState.setBottomPanelState');
+    try {
+      return super.setBottomPanelState(state);
+    } finally {
+      _$ApplicationServiceStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-currentIndex: ${currentIndex}
+currentIndex: ${currentIndex},
+isBottomPanelOpen: ${isBottomPanelOpen}
     ''';
   }
 }

@@ -13,7 +13,7 @@ class HomePageLayout extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(0.0),
           child: Column(
             children: List.generate(30, (index) {
               return Padding(
