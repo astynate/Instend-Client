@@ -53,7 +53,6 @@ abstract class ApplicationServiceState with Store {
 
   void showModalBottomPanel(BuildContext context) {
     Scaffold.of(context).showBottomSheet(
-      elevation: 99999,
       (BuildContext context) {
         return Container(
           height: MediaQuery.of(context).size.height,
