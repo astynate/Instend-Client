@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:yexder_mobile_client/global/models/account/user_model.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart';
 import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
@@ -22,7 +23,9 @@ class YexiderHeader extends StatelessWidget {
             size: const Size(45, 45),
             borderRadius: 45,
             onClick: () {
-              applicationState.showModalBottomPanel(context);
+              if (userState.user != null) {
+                applicationState.showModalBottomPanel(context, userState.user as UserModel);
+              }
             },
           ),
         )

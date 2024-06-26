@@ -41,6 +41,22 @@ mixin _$ApplicationState on ApplicationServiceState, Store {
     });
   }
 
+  late final _$isHeaderOpenAtom =
+      Atom(name: 'ApplicationServiceState.isHeaderOpen', context: context);
+
+  @override
+  bool get isHeaderOpen {
+    _$isHeaderOpenAtom.reportRead();
+    return super.isHeaderOpen;
+  }
+
+  @override
+  set isHeaderOpen(bool value) {
+    _$isHeaderOpenAtom.reportWrite(value, super.isHeaderOpen, () {
+      super.isHeaderOpen = value;
+    });
+  }
+
   late final _$ApplicationServiceStateActionController =
       ActionController(name: 'ApplicationServiceState', context: context);
 
@@ -67,10 +83,22 @@ mixin _$ApplicationState on ApplicationServiceState, Store {
   }
 
   @override
+  void setHeaderState(bool state) {
+    final _$actionInfo = _$ApplicationServiceStateActionController.startAction(
+        name: 'ApplicationServiceState.setHeaderState');
+    try {
+      return super.setHeaderState(state);
+    } finally {
+      _$ApplicationServiceStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentIndex: ${currentIndex},
-isBottomPanelOpen: ${isBottomPanelOpen}
+isBottomPanelOpen: ${isBottomPanelOpen},
+isHeaderOpen: ${isHeaderOpen}
     ''';
   }
 }

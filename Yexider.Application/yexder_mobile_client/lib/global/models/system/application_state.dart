@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
+import 'package:yexder_mobile_client/global/models/account/user_model.dart';
+import 'package:yexder_mobile_client/global/models/handlers/convert_handler.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart';
+import 'package:yexder_mobile_client/services/cloud/elements/header/statistic_item/statistic_item.dart';
 import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
 
 part 'application_state.g.dart';
@@ -16,6 +19,9 @@ abstract class ApplicationServiceState with Store {
 
   @observable
   bool isBottomPanelOpen = true;
+
+  @observable
+  bool isHeaderOpen = true;
 
   void showError(BuildContext context, YexiderSystemError error) {
     showDialog<void>(
@@ -56,8 +62,9 @@ abstract class ApplicationServiceState with Store {
     );
   }
 
-  void showModalBottomPanel(BuildContext context) {
+  void showModalBottomPanel(BuildContext context, UserModel user) {
     setBottomPanelState(false);
+    setHeaderState(false);
 
     Scaffold.of(context).showBottomSheet(
       (BuildContext context) {
@@ -65,7 +72,6 @@ abstract class ApplicationServiceState with Store {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            border: const Border(top: BorderSide(color: Color.fromARGB(255, 88, 88, 88)),),
             color: Theme.of(context).colorScheme.onSecondary,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(0.0),
@@ -120,6 +126,20 @@ abstract class ApplicationServiceState with Store {
                         )
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Row(
+                        children: [
+                          StatisticItem(title: ConvertHandler.convertTokenValueToString(user.balance ?? 0), amount: "Tokens"),
+                          const SizedBox(width: 5.0,),
+                          StatisticItem(title: user.friendCount.toString(), amount: "Friends"),
+                          const SizedBox(width: 5.0,),
+                          StatisticItem(title: ConvertHandler.convertBytesToMB(user.storageSpace ?? 0), amount: "MB (ocp.)"),
+                          const SizedBox(width: 5.0,),
+                          StatisticItem(title: ConvertHandler.convertBytesToMB(user.storageSpace ?? 0), amount: "MB (total)"),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -129,6 +149,7 @@ abstract class ApplicationServiceState with Store {
       },
     ).closed.then((value) {
       setBottomPanelState(true);
+      setHeaderState(true);
     });
   }
 
@@ -140,6 +161,11 @@ abstract class ApplicationServiceState with Store {
   @action
   void setBottomPanelState(bool state) {
     isBottomPanelOpen = state;
+  }
+
+  @action
+  void setHeaderState(bool state) {
+    isHeaderOpen = state;
   }
 }
 
