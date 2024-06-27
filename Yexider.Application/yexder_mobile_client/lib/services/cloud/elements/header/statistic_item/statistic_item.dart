@@ -21,14 +21,14 @@ class StatisticItem extends StatelessWidget {
               Text(
                 title, 
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w700
                 ),
               ),
               Text(
                 amount,
                 style: const TextStyle(
-                  fontSize: 14
+                  fontSize: 12
                 ),
               )
             ],

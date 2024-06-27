@@ -6,6 +6,8 @@ import 'package:yexder_mobile_client/global/models/account/user_model.dart';
 import 'package:yexder_mobile_client/global/models/handlers/convert_handler.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart';
+import 'package:yexder_mobile_client/services/cloud/elements/header/Title/title.dart';
+import 'package:yexder_mobile_client/services/cloud/elements/header/button_block/button_block.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/header/statistic_item/statistic_item.dart';
 import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
 
@@ -78,72 +80,96 @@ abstract class ApplicationServiceState with Store {
               topRight: Radius.circular(0.0),
             ),
           ),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 16.0,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    width: 40.0,
-                    height: 4.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(2.0),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 16.0,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Container(
+                        width: 40.0,
+                        height: 4.0,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(2.0),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        AvatarElement(
-                          base64String: userState.user?.avatar ?? "", 
-                          size: const Size(80, 80), 
-                          borderRadius: 100
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AvatarElement(
+                              base64String: userState.user?.avatar ?? "", 
+                              size: const Size(120, 120), 
+                              borderRadius: 150
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    userState.user?.nickname ?? "Undefinded", 
+                                    style: const TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '${userState.user?.name} ${userState.user?.surname}',
+                                    style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Row(
                             children: [
-                              Text(
-                                userState.user?.nickname ?? "Undefinded", 
-                                style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${userState.user?.name} ${userState.user?.surname}',
-                                style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
-                              ),
+                              StatisticItem(title: ConvertHandler.convertTokenValueToString(user.balance ?? 0), amount: "Tokens"),
+                              const SizedBox(width: 5.0,),
+                              StatisticItem(title: user.friendCount.toString(), amount: "Friends"),
+                              const SizedBox(width: 5.0,),
+                              StatisticItem(title: ConvertHandler.convertBytesToMB(user.storageSpace ?? 0), amount: "MB (ocp.)"),
+                              const SizedBox(width: 5.0,),
+                              StatisticItem(title: ConvertHandler.convertBytesToMB(user.storageSpace ?? 0), amount: "MB (total)"),
                             ],
                           ),
+                        ),
+                        const Column(
+                          children: [
+                            SettingsTitle(title: "Actions"),
+                            ButtonBlock(buttons: [
+                              ButtonElement(title: "Profile"),
+                              ButtonElement(title: "Notifications"),
+                              ButtonElement(title: "Create"),
+                              ButtonElement(title: "Messages"),
+                            ]),
+                            SettingsTitle(title: "Actions"),
+                            ButtonBlock(buttons: [
+                              ButtonElement(title: "Profile"),
+                              ButtonElement(title: "Notifications"),
+                              ButtonElement(title: "Create"),
+                              ButtonElement(title: "Messages"),
+                            ]),
+                          ],
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Row(
-                        children: [
-                          StatisticItem(title: ConvertHandler.convertTokenValueToString(user.balance ?? 0), amount: "Tokens"),
-                          const SizedBox(width: 5.0,),
-                          StatisticItem(title: user.friendCount.toString(), amount: "Friends"),
-                          const SizedBox(width: 5.0,),
-                          StatisticItem(title: ConvertHandler.convertBytesToMB(user.storageSpace ?? 0), amount: "MB (ocp.)"),
-                          const SizedBox(width: 5.0,),
-                          StatisticItem(title: ConvertHandler.convertBytesToMB(user.storageSpace ?? 0), amount: "MB (total)"),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         );
       },

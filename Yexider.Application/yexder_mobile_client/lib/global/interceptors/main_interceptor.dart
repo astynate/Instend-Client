@@ -52,7 +52,7 @@ enum YexiderContentTypes {
 
 class YexiderHttpClient {
   static const int _timeOut = 7;
-  static const String _baseUrl = "http://10.0.2.2:5000"; // Web: "http://localhost:5000" | Emulator: "http://10.0.2.2:5000"
+  static const String _baseUrl = "http://localhost:5000"; // Web: "http://localhost:5000" | Emulator: "http://10.0.2.2:5000"
 
   static Future<Map<String, String>> _getHeaders(Map<String, String>? headers, YexiderContentTypes? contentType) async {
     Map<String, String> combinedHeaders = {
