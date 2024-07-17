@@ -38,3 +38,4 @@ flutter:
     - assets/icons/
     - assets/main/navigation/active_icons/
     - assets/main/navigation/passive_icons/
+    - assets/account/color_mode/

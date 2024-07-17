@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yexder_mobile_client/global/models/account/user_model.dart';
@@ -192,6 +193,21 @@ abstract class ApplicationServiceState with Store {
   @action
   void setHeaderState(bool state) {
     isHeaderOpen = state;
+  }
+
+  void setAdaptiveOrientation() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown
+    ]);
+  }
+  
+  void setOrientationUp() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 }
 

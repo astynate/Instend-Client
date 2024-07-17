@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
-import 'package:yexder_mobile_client/global/models/account/friend_model.dart';
 import 'package:yexder_mobile_client/global/models/account/user_model.dart';
-import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/account/pages/main/account.dart';
 import 'package:yexder_mobile_client/services/cloud/layout/layout.dart';
 import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
@@ -61,7 +59,7 @@ class AuthorizationPageState extends State<AuthorizationPage> {
           children: <Widget> [
             Spacer(),
             CupertinoActivityIndicator(
-              color: Colors.white,
+              color: Color.fromARGB(255, 0, 0, 0),
             ),
             SizedBox(width: 50),
             Spacer(),

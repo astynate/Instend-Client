@@ -27,13 +27,13 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
-          AccountHeader(title: "Login with Yexider ID", widgets: [
+          AccountHeader(title: "Yexider ID", widgets: [
             Column(
               children: [
                 AccountSimpleInput(placeholder: "Email or nickaname", onChanged: (text) => {
@@ -59,12 +59,10 @@ class LoginPageState extends State<LoginPage> {
           ],),
           const Spacer(),
           AccountFooter(children: [
-            MainAccountButton(
+            MainAccountButton.specificObject(
+              context: context,
+              type: AccountButtonTypes.primary,
               text: "Next", 
-              textColor: 
-              Colors.black, 
-              backgroundColor: 
-              Colors.white, 
               isLoading: isLoading,
               onPressed: () async {
                   if (ValidateHandler.validateString(email, 30) == false) {
@@ -118,10 +116,10 @@ class LoginPageState extends State<LoginPage> {
                   }
               }
             ),
-            MainAccountButton(
+            MainAccountButton.specificObject(
               text: "Back", 
-              textColor: const Color.fromARGB(255, 255, 255, 255), 
-              backgroundColor: const Color.fromARGB(255, 47, 47, 48), 
+              type: AccountButtonTypes.secondary,
+              context: context,
               onPressed: () {
                 Navigator.pop(context);
               }

@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 
 class AccountPageTitle extends StatelessWidget {
   final String text;
-  final double fontSize;
-  final Color color;
-  final FontWeight fontWeight;
 
   const AccountPageTitle({
     super.key,
     required this.text,
-    this.fontSize = 25.0,
-    this.color = const Color.fromARGB(255, 255, 255, 255),
-    this.fontWeight = FontWeight.w700,
   });
 
   @override
@@ -20,9 +14,9 @@ class AccountPageTitle extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: fontSize,
-        color: color,
-        fontWeight: fontWeight,
+        fontSize: 30.0,
+        color: Theme.of(context).colorScheme.onPrimary,
+        fontWeight: FontWeight.w800,
         decoration: TextDecoration.none,
       ),
     );

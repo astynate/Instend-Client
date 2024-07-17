@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:yexder_mobile_client/global/models/system/theme_state.dart';
 import 'package:yexder_mobile_client/services/proxy/pages/authorization/authorization.dart';
 
 void main() {
@@ -10,19 +12,12 @@ class YexiderApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorScheme: ColorScheme.fromSwatch(
-          backgroundColor: Colors.black,
-          primarySwatch: Colors.blue,
-          brightness: Brightness.dark
-        )
+    return Observer(
+      builder: (BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: colorTheme.currentTheme,
+        home: const AuthorizationPage(),
       ),
-      home: const AuthorizationPage(),
     );
   }
 }
-
-// Yexider Mobile Client.
-// © Andreev S, 2024 — Minsk, Belarus.

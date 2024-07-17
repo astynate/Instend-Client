@@ -33,34 +33,46 @@ class AccountSimpleInputState extends State<AccountSimpleInput> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: TextField(
-        keyboardType: widget.type,
-        obscureText: widget.isObscured,
-        autocorrect: false,
-        controller: _controller,
-        style: const TextStyle(color: Colors.white, decoration: TextDecoration.none),
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide(color: Colors.red),
-          ),
-          labelStyle: const TextStyle(color: Color.fromARGB(120, 255, 255, 255)),
-          hintText: widget.placeholder,
-          labelText: widget.placeholder,
-          hintStyle: const TextStyle(color: Color.fromARGB(120, 255, 255, 255)),
-          suffixIcon: widget.type == TextInputType.visiblePassword ? IconButton(
-            icon: Icon(
-              widget.isObscured ? CupertinoIcons.eye_slash : CupertinoIcons.eye_fill,
+      width: MediaQuery.of(context).size.width * 0.95,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Container(
+          color: Theme.of(context).colorScheme.secondary,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10, left: 15, right: 15),
+            child: TextFormField(
+              keyboardType: widget.type,
+              obscureText: widget.isObscured,
+              autocorrect: false,
+              controller: _controller,
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, decoration: TextDecoration.none),
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.onSecondary),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+                ),
+                labelStyle: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+                // hintText: widget.placeholder,
+                labelText: widget.placeholder,
+                hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+                suffixIcon: widget.type == TextInputType.visiblePassword ? IconButton(
+                  icon: Icon(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    widget.isObscured ? CupertinoIcons.eye_slash : CupertinoIcons.eye_fill,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget.isObscured = !widget.isObscured;
+                    });
+                  },
+                ) : null,
+              ),
+              onChanged: widget.onChanged,
             ),
-            onPressed: () {
-              setState(() {
-                widget.isObscured = !widget.isObscured;
-              });
-            },
-          ) : null,
+          ),
         ),
-        onChanged: widget.onChanged,
       ),
     );
   }
