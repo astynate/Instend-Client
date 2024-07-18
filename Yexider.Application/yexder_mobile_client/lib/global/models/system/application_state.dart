@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 import 'package:yexder_mobile_client/global/models/account/user_model.dart';
 import 'package:yexder_mobile_client/global/models/handlers/convert_handler.dart';
+import 'package:yexder_mobile_client/global/models/handlers/statusbar_handler.dart';
 import 'package:yexder_mobile_client/global/models/system/error.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/header/Title/title.dart';
@@ -27,6 +28,9 @@ abstract class ApplicationServiceState with Store {
   bool isHeaderOpen = true;
 
   void showError(BuildContext context, YexiderSystemError error) {
+    StatusBarTheme theme = StatusbarHandler.statusBarTheme;
+    StatusbarHandler.setDarkTheme();
+    
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -35,13 +39,19 @@ abstract class ApplicationServiceState with Store {
             actionsPadding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
             buttonPadding: const EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
             contentPadding: const EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
-            backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-            title: Text(error.title, style: const TextStyle(color: Colors.white), textAlign: TextAlign.center),
-            content: Text(error.message, style: const TextStyle(color: Color.fromARGB(255, 177, 177, 177)), textAlign: TextAlign.center),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            title: Text(error.title, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary), textAlign: TextAlign.center),
+            content: Text(error.message, style: TextStyle(color: Theme.of(context).colorScheme.onSecondary), textAlign: TextAlign.center),
             actions: <Widget>[
               Center(
                 child: TextButton(
                   onPressed: () {
+                    if (theme == StatusBarTheme.light) {
+                      StatusbarHandler.setLightTheme();
+                    } else {
+                      StatusbarHandler.setDarkTheme();
+                    }
+                    
                     Navigator.pop(context);
                   },
                   child: const Text('Ok', style: TextStyle(color: CupertinoColors.activeBlue)),
@@ -57,8 +67,9 @@ abstract class ApplicationServiceState with Store {
   void showAttentionMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.errorContainer,
         behavior: SnackBarBehavior.floating,
-        content: Text(message),
+        content: Text(message, style: TextStyle(color: Theme.of(context).colorScheme.onErrorContainer),),
         showCloseIcon: true,
         duration: const Duration(seconds: 3),
       ),

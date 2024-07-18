@@ -18,7 +18,7 @@ class AccountHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.only(bottom: 0),
             child: AccountLogo(),
           ),
           Padding(

@@ -7,8 +7,8 @@ class AccountLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       "assets/icons/company-logo.png",
-      width: 70.0,
-      height: 70.0,
+      width: 72.0,
+      height: 72.0,
     );
   }
 }

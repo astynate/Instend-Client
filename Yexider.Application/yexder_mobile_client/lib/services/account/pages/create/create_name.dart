@@ -16,8 +16,17 @@ class CreateNamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Scaffold(
-        backgroundColor: Colors.black,
-        body: Column(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+        child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -27,23 +36,31 @@ class CreateNamePage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 7.0),
-                    child: AccountSimpleInput(placeholder: "Name", onChanged: (text) {
-                      accountServiceState.changeName(text);
-                    }, defaultValue: accountServiceState.newUser.name),
+                    child: AccountSimpleInput(
+                      placeholder: "Name", 
+                      onChanged: (text) {
+                        accountServiceState.changeName(text);
+                      }, 
+                      defaultValue: accountServiceState.newUser.name
+                    ),
                   ),
-                  AccountSimpleInput(placeholder: "Surname", onChanged: (text) {
-                    accountServiceState.changeSurname(text);
-                  }, defaultValue: accountServiceState.newUser.surname),
+                  AccountSimpleInput(
+                    placeholder: "Surname", 
+                    onChanged: (text) {
+                      accountServiceState.changeSurname(text);
+                    }, 
+                    defaultValue: accountServiceState.newUser.surname
+                  ),
                 ],
               ),
             ]),
             const Spacer(),
             AccountFooter(
               children: [
-                MainAccountButton(
+                MainAccountButton.specificObject(
                   text: "Next",
-                  textColor: Colors.black,
-                  backgroundColor: Colors.white,
+                  type: AccountButtonTypes.primary,
+                  context: context,
                   onPressed: () {
                     if (ValidateHandler.validateString(accountServiceState.newUser.name.toString(), 20) == false) {
                       applicationState.showAttentionMessage(context, "Invalid name!");
@@ -60,18 +77,23 @@ class CreateNamePage extends StatelessWidget {
                     }));
                   },
                 ),
-                MainAccountButton(
+                MainAccountButton.specificObject(
                   text: "Back",
-                  textColor: const Color.fromARGB(255, 255, 255, 255),
-                  backgroundColor: const Color.fromARGB(255, 41, 42, 43),
+                  type: AccountButtonTypes.secondary,
+                  context: context,
                   onPressed: () {
                     Navigator.pop(context);
-                  },
-                )
-              ],
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ],
-        ),
+          );
+        }
+      ),
       ),
     );
   }

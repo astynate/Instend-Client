@@ -31,92 +31,106 @@ class CreatePasswordPageState extends State<CreatePasswordPage> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Scaffold(
-        backgroundColor: Colors.black,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Spacer(),
-            AccountHeader(title: "Create an Yexider ID", widgets: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 7.0),
-                    child: AccountSimpleInput(
-                      placeholder: "Password", 
-                      onChanged: (text) {
-                        accountServiceState.changePassword(text);
-                      }, 
-                      defaultValue: accountServiceState.newUser.password,
-                      type: TextInputType.visiblePassword,
-                      isObscured: true,
-                    ),
-                  ),
-                  AccountSimpleInput(
-                    placeholder: "Confirm password", 
-                    onChanged: (text) {
-                      accountServiceState.changeConfirmPassword(text);
-                    }, 
-                    defaultValue: accountServiceState.newUser.confirmPassword,
-                    type: TextInputType.visiblePassword,
-                    isObscured: true,
-                  ),
-                ],
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight,
               ),
-            ]),
-            const Spacer(),
-            AccountFooter(
-              children: [
-                MainAccountButton(
-                  text: "Next",
-                  textColor: Colors.black,
-                  backgroundColor: Colors.white,
-                  isLoading: isLoading,
-                  onPressed: () async {
-                    if (ValidateHandler.validatePassword(accountServiceState.newUser.password.toString()) == false) {
-                      applicationState.showAttentionMessage(context, "Invalid password");
-                      return;
-                    }
+              child: IntrinsicHeight(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Spacer(),
+                    AccountHeader(title: "Create an Yexider ID", widgets: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 7.0),
+                            child: AccountSimpleInput(
+                              placeholder: "Password", 
+                              onChanged: (text) {
+                                accountServiceState.changePassword(text);
+                              }, 
+                              defaultValue: accountServiceState.newUser.password,
+                              type: TextInputType.visiblePassword,
+                              isObscured: true,
+                            ),
+                          ),
+                          AccountSimpleInput(
+                            placeholder: "Confirm password", 
+                            onChanged: (text) {
+                              accountServiceState.changeConfirmPassword(text);
+                            }, 
+                            defaultValue: accountServiceState.newUser.confirmPassword,
+                            type: TextInputType.visiblePassword,
+                            isObscured: true,
+                          ),
+                        ],
+                      ),
+                    ]),
+                    const Spacer(),
+                    AccountFooter(
+                      children: [
+                        MainAccountButton.specificObject(
+                          text: "Next",
+                          type: AccountButtonTypes.primary,
+                          context: context,
+                          isLoading: isLoading,
+                          onPressed: () async {
+                            if (ValidateHandler.validatePassword(accountServiceState.newUser.password.toString()) == false) {
+                              applicationState.showAttentionMessage(context, "Invalid password");
+                              return;
+                            }
 
-                    if (ValidateHandler.validatePassword(accountServiceState.newUser.confirmPassword.toString()) == false) {
-                      applicationState.showAttentionMessage(context, "Passwords must be the same.");
-                      return;
-                    }
+                            if (ValidateHandler.validatePassword(accountServiceState.newUser.confirmPassword.toString()) == false) {
+                              applicationState.showAttentionMessage(context, "Passwords must be the same.");
+                              return;
+                            }
 
-                    setLoadingState(true);
-                    var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
-                    setLoadingState(false);
-                    
-                    String body = result.value?.body ?? "";
+                            setLoadingState(true);
+                            var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
+                            setLoadingState(false);
+                            
+                            String body = result.value?.body ?? "";
 
-                    if (!context.mounted) return;
+                            if (!context.mounted) return;
 
-                    if ((result.isFailure == true) || 
-                        (result.isSuccess && result.value!.statusCode != 200) || 
-                        (result.isSuccess && ValidateHandler.validateGuid(body) == false)) 
-                    {
-                      applicationState.showError(context, YexiderSystemError("Attention", result.error));
-                    } 
-                    else if (context.mounted) {
-                      accountServiceState.setConfimationLink(body);
+                            if ((result.isFailure == true) || 
+                                (result.isSuccess && result.value!.statusCode != 200) || 
+                                (result.isSuccess && ValidateHandler.validateGuid(body) == false)) 
+                            {
+                              applicationState.showError(context, YexiderSystemError("Attention", result.error));
+                            } 
+                            else if (context.mounted) {
+                              accountServiceState.setConfimationLink(body);
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const ConfirmEmailPage();
-                      }));
-                    }
-                  },
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return const ConfirmEmailPage();
+                              }));
+                            }
+                          },
+                        ),
+                        MainAccountButton.specificObject(
+                          text: "Back",
+                          type: AccountButtonTypes.secondary,
+                          context: context,
+                          onPressed: () {
+                            Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                MainAccountButton(
-                  text: "Back",
-                  textColor: const Color.fromARGB(255, 255, 255, 255),
-                  backgroundColor: const Color.fromARGB(255, 41, 42, 43),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ),
-          ],
+              ),
+            );
+          }
         ),
       ),
     );

@@ -16,56 +16,71 @@ class CreateEmailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Scaffold(
-        backgroundColor: Colors.black,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Spacer(),
-            AccountHeader(title: "Create an Yexider ID", widgets: [
-              Column(
-                children: [
-                  AccountSimpleInput(
-                    placeholder: "Email", 
-                    onChanged: (text) {
-                      accountServiceState.changeEmail(text);
-                    }, 
-                    defaultValue: accountServiceState.newUser.email,
-                    type: TextInputType.emailAddress,
-                  ),
-                ],
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight,
               ),
-            ]),
-            const Spacer(),
-            AccountFooter(
-              children: [
-                MainAccountButton(
-                  text: "Next",
-                  textColor: Colors.black,
-                  backgroundColor: Colors.white,
-                  onPressed: () {
-                    if (ValidateHandler.validateEmail(accountServiceState.newUser.email.toString()) == true) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const CreateNicknamePage();
-                      }));
-                    } else {
-                      applicationState.showAttentionMessage(context, 
-                        "Invalid email! example@gmail.com");
-                    }
-                  },
+              child: IntrinsicHeight(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Spacer(),
+                    AccountHeader(title: "Create an Yexider ID", widgets: [
+                      Column(
+                        children: [
+                          AccountSimpleInput(
+                            placeholder: "Email", 
+                            text: "Your email should looks like example@domain.com. This field is required.",
+                            onChanged: (text) {
+                              accountServiceState.changeEmail(text);
+                            }, 
+                            defaultValue: accountServiceState.newUser.email,
+                            type: TextInputType.emailAddress,
+                          ),
+                        ],
+                      ),
+                    ]),
+                    const Spacer(),
+                    AccountFooter(
+                      children: [
+                        MainAccountButton.specificObject(
+                          text: "Next",
+                          type: AccountButtonTypes.primary,
+                          context: context,
+                          onPressed: () {
+                            if (ValidateHandler.validateEmail(accountServiceState.newUser.email.toString()) == true) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return const CreateNicknamePage();
+                              }));
+                            } else {
+                              applicationState.showAttentionMessage(context, 
+                                "Invalid email! example@gmail.com");
+                            }
+                          },
+                        ),
+                        MainAccountButton.specificObject(
+                          text: "Back",
+                          type: AccountButtonTypes.secondary,
+                          context: context,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-                MainAccountButton(
-                  text: "Back",
-                  textColor: const Color.fromARGB(255, 255, 255, 255),
-                  backgroundColor: const Color.fromARGB(255, 41, 42, 43),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
+              ),
             ),
-          ],
-        ),
+          );
+        }
+      ),
       ),
     );
   }

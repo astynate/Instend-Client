@@ -41,7 +41,7 @@ class AccountPage extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 17,
-                          fontWeight: FontWeight.w500
+                          fontWeight: FontWeight.w700
                         ),
                       ),
                     ),
