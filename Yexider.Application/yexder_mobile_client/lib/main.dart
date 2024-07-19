@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/global/models/system/theme_state.dart';
 import 'package:yexder_mobile_client/services/proxy/pages/authorization/authorization.dart';
+
+void setDefaultColorTheme() async {
+  String? theme = await secureStorage.read(key: 'brightness');
+
+  if (theme != null) {
+    colorTheme.setColorMode(theme == "light" ? 
+      colorTheme.lightTheme : colorTheme.darkTheme);
+  } else {
+    colorTheme.setColorMode(colorTheme.lightTheme);
+  }
+}
 
 void main() {
   runApp(const YexiderApplication());
@@ -12,6 +24,8 @@ class YexiderApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    setDefaultColorTheme();
+
     return Observer(
       builder: (BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,

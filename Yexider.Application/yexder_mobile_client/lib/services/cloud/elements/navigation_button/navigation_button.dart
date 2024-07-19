@@ -33,8 +33,8 @@ class YexiderNavigationButton extends StatelessWidget {
         child: SvgPicture.asset(
           index == currentIndex ? selectedIcon : defaultIcon,
           semanticsLabel: "None",
-          width: 21.0,
-          height: 21.0,
+          width: 23.0,
+          height: 23.0,
         ),
       ),
     );

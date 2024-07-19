@@ -34,12 +34,12 @@ class _AvatarElementState extends State<AvatarElement> {
     return GestureDetector (
       onTap: widget.onClick,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(widget.borderRadius), // Adjust the radius as needed
+        borderRadius: BorderRadius.circular(widget.borderRadius),
         child: Image.memory(
           byteArray,
           width: widget.size.width,
           height: widget.size.height,
-          fit: BoxFit.cover, // Choose the appropriate fit for your use case
+          fit: BoxFit.cover,
         ),
       ),
     );

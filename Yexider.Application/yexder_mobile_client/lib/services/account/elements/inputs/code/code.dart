@@ -39,15 +39,20 @@ class CodeInputField extends StatelessWidget {
                       // textCapitalization: TextCapitalization.sentences,
                       maxLength: 1,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+                      decoration: InputDecoration(
                         counterText: '',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.red),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         ),
-                        labelStyle: TextStyle(color: Color.fromARGB(120, 0, 0, 0)),
-                        hintStyle: TextStyle(color: Color.fromARGB(120, 0, 0, 0)),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Theme.of(context).colorScheme.onSecondary),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+                        ),
+                        labelStyle: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+                        hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
                       ),
                     ),
                   ),

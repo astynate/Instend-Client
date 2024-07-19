@@ -9,32 +9,36 @@ class StatisticItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-          color: Color.fromARGB(255, 54, 54, 54)
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 0.0),
-          child: Column(
-            children: [
-              Text(
-                title, 
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(21.0)),
+            color: Theme.of(context).colorScheme.secondary
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title, 
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800
+                  ),
                 ),
-              ),
-              Text(
-                amount,
-                style: const TextStyle(
-                  fontSize: 12
-                ),
-              )
-            ],
+                const SizedBox(height: 0),
+                Text(
+                  amount,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                    fontWeight: FontWeight.w500
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
 }

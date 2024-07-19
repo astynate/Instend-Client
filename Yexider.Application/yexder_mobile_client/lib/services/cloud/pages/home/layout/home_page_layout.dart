@@ -15,22 +15,26 @@ class HomePageLayout extends StatelessWidget {
             preferredSize: applicationState.isHeaderOpen ? AppBar().preferredSize :  const Size(0, 0),
             child: const YexiderHeader(title: "Home")
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Column(
-                children: List.generate(30, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Container(
-                      color: Colors.grey[300],
-                      height: 100,
-                      child: Center(
-                        child: Text('Item ${index + 1}'),
+          body: Container(
+            decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(40.0))),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Column(
+                  children: List.generate(30, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 2.0),
+                      child: Container(
+                        color: const Color.fromARGB(255, 27, 27, 27),
+                        height: 200,
+                        child: Center(
+                          child: Text('Item ${index + 1}'),
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
           ),

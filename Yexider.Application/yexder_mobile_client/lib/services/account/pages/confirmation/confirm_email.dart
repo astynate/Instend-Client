@@ -22,7 +22,7 @@ class ConfirmEmailPageState extends State<ConfirmEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,20 +31,21 @@ class ConfirmEmailPageState extends State<ConfirmEmailPage> {
           AccountHeader(title: "Confirm your email", widgets: [
             Column(
               children: [
-                CodeInputField(setString: (value) => {
-                  accountServiceState.setConfimationCode(value)
-                }),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: CodeInputField(setString: (value) => {
+                    accountServiceState.setConfimationCode(value)
+                  }),
+                ),
               ],
             ),
           ],),
           const Spacer(),
           AccountFooter(children: [
-            MainAccountButton(
+            MainAccountButton.specificObject(
               text: "Next", 
-              textColor: 
-              Colors.black, 
-              backgroundColor: 
-              Colors.white, 
+              type: AccountButtonTypes.primary,
+              context: context,
               isLoading: isLoading,
               onPressed: () async {
                 setState(() {
@@ -71,10 +72,10 @@ class ConfirmEmailPageState extends State<ConfirmEmailPage> {
                 }
               }
             ),
-            MainAccountButton(
+            MainAccountButton.specificObject(
               text: "Back", 
-              textColor: const Color.fromARGB(255, 255, 255, 255), 
-              backgroundColor: const Color.fromARGB(255, 47, 47, 48), 
+              type: AccountButtonTypes.secondary,
+              context: context,
               onPressed: () {
                 Navigator.pop(context);
               }

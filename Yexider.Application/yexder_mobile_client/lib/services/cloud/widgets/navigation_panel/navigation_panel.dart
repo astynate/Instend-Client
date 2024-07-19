@@ -36,11 +36,11 @@ class _YexiderNavigationPanelState extends State<YexiderNavigationPanel> with Ti
       builder: (context) => Container(
         decoration: const BoxDecoration(
           border: Border(
-            top: BorderSide(width: 1, color: Color.fromARGB(255, 48, 48, 48)),
+            // top: BorderSide(width: 1, color: Color.fromARGB(255, 48, 48, 48)),
           ),
         ),
         child: BottomAppBar(
-          height: widget.isOpen ? 56 : 0,
+          height: widget.isOpen ? 50 : 0,
           elevation: 0,
           color: const Color.fromARGB(255, 0, 0, 0),
           child: Row(
