@@ -1,19 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:yexder_mobile_client/global/database/database.dart';
+import 'package:yexder_mobile_client/global/models/account/user_model.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/account/elements/button/main_account_button.dart';
+import 'package:yexder_mobile_client/services/account/elements/existing_account/existing_account.dart';
 import 'package:yexder_mobile_client/services/account/features/color_mode/color_mode.dart';
 import 'package:yexder_mobile_client/services/account/pages/create/create_email.dart';
 import 'package:yexder_mobile_client/services/account/pages/login/login.dart';
 import 'package:yexder_mobile_client/services/account/widgets/footer/account_footer.dart';
 import 'package:yexder_mobile_client/services/account/widgets/header/account_header.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    applicationState.setOrientationUp();
+  State<AccountPage> createState() => _AccountPageState();
+}
 
+class _AccountPageState extends State<AccountPage> {
+  UserModel? account;
+
+  Future<UserModel?> findFirstAccount() async {
+    final database = await DatabaseService.instance.databaseInstance;
+    final users = await database!.query(UserModel.empthy().tableName);
+    
+    debugPrint(users.length.toString());
+
+    if (users.isNotEmpty) {
+      return UserModel.fromMap(users.first);
+    }
+
+    return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeAccount();
+    applicationState.setOrientationUp();
+  }
+
+  Future<void> _initializeAccount() async {
+    UserModel? account = await findFirstAccount();
+
+    if (account != null && mounted) {
+      setState(() {
+        this.account = account;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
@@ -45,7 +83,12 @@ class AccountPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  if (account != null) 
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18.0),
+                      child: ExistingAccount(user: account ?? UserModel.empthy()),
+                    ),
                 ],
               ),
               const Spacer(),

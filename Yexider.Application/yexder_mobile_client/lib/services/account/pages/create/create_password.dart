@@ -93,7 +93,7 @@ class CreatePasswordPageState extends State<CreatePasswordPage> {
                             }
 
                             setLoadingState(true);
-                            var result = await CreateAccountAPI.createAccount(accountServiceState.newUser);
+                            var result = await AccountAPI.createAccount(accountServiceState.newUser);
                             setLoadingState(false);
                             
                             String body = result.value?.body ?? "";

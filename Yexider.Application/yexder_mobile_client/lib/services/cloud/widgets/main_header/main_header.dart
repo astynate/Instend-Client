@@ -13,6 +13,7 @@ class YexiderHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.surface,
       surfaceTintColor: Colors.transparent,
       actions: [
@@ -24,7 +25,7 @@ class YexiderHeader extends StatelessWidget {
             borderRadius: 45,
             onClick: () {
               if (userState.user != null) {
-                applicationState.showModalBottomPanel(context, userState.user as UserModel);
+                applicationState.showProfileBottomPanel(context, userState.user as UserModel);
               }
             },
           ),
@@ -52,11 +53,15 @@ class YexiderHeader extends StatelessWidget {
           ),
           const Text(
             'Yexider ',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24.0),
           ),
           Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 24.0, color: Color.fromARGB(255, 169, 169, 169)),
+            style: const TextStyle(
+              fontWeight: FontWeight.w500, 
+              fontSize: 24.0, 
+              color: Color(0xFFC4C4C4)
+            ),
           ),
         ],
       )

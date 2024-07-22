@@ -71,11 +71,12 @@ abstract class ApplicationServiceState with Store {
     );
   }
 
-  void showModalBottomPanel(BuildContext context, UserModel user) {
+  void showProfileBottomPanel(BuildContext context, UserModel user) {
     setBottomPanelState(false);
     setHeaderState(false);
 
     Scaffold.of(context).showBottomSheet(
+      constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
       backgroundColor: Theme.of(context).colorScheme.surface,
       (BuildContext context) {
         return Container(
@@ -111,6 +112,56 @@ abstract class ApplicationServiceState with Store {
     ).closed.then((value) {
       setBottomPanelState(true);
       setHeaderState(true);
+    });
+  }
+
+  void showBottomPanel(BuildContext context, Widget widget, double height) {
+    setHeaderState(true);
+    setBottomPanelState(false);
+    StatusbarHandler.setCustomTheme(Brightness.dark, Theme.of(context).colorScheme.tertiary);
+
+    Scaffold.of(context).showBottomSheet(
+      constraints: BoxConstraints(
+        minWidth: MediaQuery.of(context).size.width
+      ),
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      (BuildContext context) {
+        return Container(
+          height: height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.tertiary,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(40.0),
+              topRight: Radius.circular(40.0),
+            ),
+          ),
+          child: Column(
+            children: [
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 10.0),
+              //   child: Container(
+              //     width: 50.0,
+              //     height: 4.0,
+              //     decoration: BoxDecoration(
+              //       color: Theme.of(context).colorScheme.onPrimary,
+              //       borderRadius: BorderRadius.circular(15.0),
+              //     ),
+              //   ),
+              // ),
+              widget
+            ],
+          ), 
+        );
+      },
+    ).closed.then((value) {
+      setBottomPanelState(true);
+
+      if (StatusbarHandler.statusBarTheme == StatusBarTheme.light) {
+        StatusbarHandler.setLightTheme();
+      } else {
+        StatusbarHandler.setDarkTheme();
+      }
     });
   }
 

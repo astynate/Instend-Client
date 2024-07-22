@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:yexder_mobile_client/global/database/database.dart';
+import 'package:yexder_mobile_client/global/models/account/user_model.dart';
 import 'package:yexder_mobile_client/global/models/handlers/convert_handler.dart';
+import 'package:yexder_mobile_client/global/models/system/application_state.dart';
+import 'package:yexder_mobile_client/services/account/pages/login/login.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/header/button/button.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/header/statistic_item/statistic_item.dart';
+import 'package:yexder_mobile_client/services/cloud/elements/popup/button/popup_button.dart';
+import 'package:yexder_mobile_client/services/cloud/pages/profile/profile_page_layout.dart';
+import 'package:yexder_mobile_client/services/cloud/pages/settings/settings_page_layout.dart';
 import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
+import 'package:yexder_mobile_client/services/proxy/pages/authorization/authorization.dart';
 
 class ProfilePopup extends StatelessWidget {
   late ScrollController scrollController = ScrollController();
@@ -54,40 +63,63 @@ class ProfilePopup extends StatelessWidget {
                         children: [
                           StatisticItem(title: ConvertHandler.convertTokenValueToString(userState.user!.balance ?? 0), amount: "Tokens"),
                           const SizedBox(width: 5.0,),
-                          StatisticItem(title: userState.user!.friendCount.toString(), amount: "Friends"),
+                          StatisticItem(title: userState.user!.countFriends.toString(), amount: "Friends"),
                           const SizedBox(width: 5.0,),
-                          StatisticItem(title: ConvertHandler.convertBytesToMB(userState.user!.storageSpace ?? 0), amount: "MB (ocp.)"),
+                          StatisticItem(title: ConvertHandler.convertBytesToMB(userState.user!.occupiedSpace ?? 0), amount: "MB (ocp.)"),
                           const SizedBox(width: 5.0,),
                           StatisticItem(title: ConvertHandler.convertBytesToMB(userState.user!.storageSpace ?? 0), amount: "MB (total)"),
                         ]
                       ),
                     ),
-                    const SettingButton(
+                    SettingButton(
+                      function: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ProfilePageLayout()),
+                        );
+                      },
+                      icon: "assets/main/settings/account.svg",
                       text: "Profile", 
                       description: "In your profile you can share your thoughts, photos, videos and music you love with your friends. ",
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: SettingButton(
+                        function: () {
+
+                        },
+                        icon: "assets/main/settings/messages.svg",
                         text: "Messages",
                         description: "Here you can communicate in personal chats, join servers and ask Cyra thinks you interested in.",
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: SettingButton(
+                        function: () {
+
+                        },
+                        icon: "assets/main/settings/create.svg",
                         text: "Create",
                         description: "You can create publication or community, upload your photos, music and videos.",
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: SettingButton(
-                      text: "Settings",
-                      description: "Here you can set the color theme, notification settings, and manage your privacy.",
+                        function: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SettingsPageLayout()),
+                          );
+                        },
+                        icon: "assets/main/settings/settings.svg",
+                        text: "Settings",
+                        description: "Here you can set the color theme, notification settings, and manage your privacy.",
+                      ),
                     ),
-                  ),
-                ]
+                  ]
                 ),
               )
             ),

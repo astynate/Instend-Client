@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/services/cloud/widgets/main_header/main_header.dart';
 
-class HomePageLayout extends StatelessWidget {
-  const HomePageLayout({super.key});
+class ProfilePageLayout extends StatelessWidget {
+  const ProfilePageLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class HomePageLayout extends StatelessWidget {
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: applicationState.isHeaderOpen ? AppBar().preferredSize :  const Size(0, 0),
-            child: const YexiderHeader(title: "Home")
+            child: const YexiderHeader(title: "Profile")
           ),
           body: Container(
             decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(40.0))),
@@ -26,10 +26,7 @@ class HomePageLayout extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 2.0),
                       child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(top: BorderSide(color: Theme.of(context).colorScheme.secondary))
-                        ),
-                        // color: const Color.fromARGB(255, 27, 27, 27),
+                        color: const Color.fromARGB(255, 27, 27, 27),
                         height: 200,
                         child: Center(
                           child: Text('Item ${index + 1}'),

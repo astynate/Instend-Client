@@ -9,9 +9,9 @@ void setDefaultColorTheme() async {
 
   if (theme != null) {
     colorTheme.setColorMode(theme == "light" ? 
-      colorTheme.lightTheme : colorTheme.darkTheme);
+      colorTheme.mainLightTheme : colorTheme.mainDarkTheme);
   } else {
-    colorTheme.setColorMode(colorTheme.lightTheme);
+    colorTheme.setColorMode(colorTheme.mainLightTheme);
   }
 }
 

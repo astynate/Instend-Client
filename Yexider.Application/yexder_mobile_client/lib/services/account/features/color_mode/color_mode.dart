@@ -46,10 +46,10 @@ class _ColorModeState extends State<ColorMode> {
       onTap: () {
         setState(() {
           if (brightness == Brightness.light) {
-            colorTheme.setColorMode(colorTheme.darkTheme);
+            colorTheme.setColorMode(colorTheme.accountServiceDarkTheme);
             brightness = Brightness.dark;
           } else {
-            colorTheme.setColorMode(colorTheme.lightTheme);
+            colorTheme.setColorMode(colorTheme.accountServiceLightTheme);
             brightness = Brightness.light;
           }
         });

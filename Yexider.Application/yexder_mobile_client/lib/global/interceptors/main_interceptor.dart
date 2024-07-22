@@ -103,13 +103,18 @@ class YexiderHttpClient {
     }
   }
 
-  Future<Result<http.Response>> put(String url, {Map<String, String>? headers}) async {
+  Future<Result<http.Response>> put(
+    String url, {
+    Map<String, String>? headers,
+    Object? object,
+    YexiderContentTypes? contentType,
+  }) async {
     try {
-      http.Response response = await http.put(Uri.parse(_baseUrl + url), headers: await  _getHeaders(headers, null))
+      http.Response response = await http.put(Uri.parse(_baseUrl + url), headers: await _getHeaders(headers, contentType), body: object)
         .timeout(const Duration(seconds: _timeOut));
 
       return Result<http.Response>().success(response); 
-    } 
+    }
     catch (exception) {
       return Result<http.Response>()
         .failure(exception.toString());
