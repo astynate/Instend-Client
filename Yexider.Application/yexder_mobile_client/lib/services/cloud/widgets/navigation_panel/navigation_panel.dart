@@ -36,15 +36,19 @@ class _YexiderNavigationPanelState extends State<YexiderNavigationPanel> with Ti
       builder: (context) => Container(
         decoration: const BoxDecoration(
           border: Border(
-            // top: BorderSide(width: 1, color: Color.fromARGB(255, 48, 48, 48)),
+            top: BorderSide(
+              width: 1, 
+              color: Color.fromARGB(26, 255, 255, 255)
+            ),
           ),
         ),
         child: BottomAppBar(
-          height: widget.isOpen ? 50 : 0,
+          height: widget.isOpen ? 55 : 0,
           elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           color: const Color.fromARGB(255, 0, 0, 0),
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 YexiderNavigationButton(
                   defaultIcon: "assets/main/navigation/passive_icons/home_passive.svg",
@@ -77,6 +81,15 @@ class _YexiderNavigationPanelState extends State<YexiderNavigationPanel> with Ti
                   defaultIcon: "assets/main/navigation/passive_icons/gallery_passive.svg",
                   selectedIcon: "assets/main/navigation/active_icons/gallery_active.svg",
                   index: 3,
+                  currentIndex: applicationState.currentIndex,
+                  onPressed: (indexValue) {
+                    applicationState.setCurrentIndex(indexValue);
+                  },
+                ),
+                YexiderNavigationButton(
+                  defaultIcon: "assets/main/navigation/passive_icons/messages_passive.svg",
+                  selectedIcon: "assets/main/navigation/active_icons/messages_active.svg",
+                  index: 4,
                   currentIndex: applicationState.currentIndex,
                   onPressed: (indexValue) {
                     applicationState.setCurrentIndex(indexValue);

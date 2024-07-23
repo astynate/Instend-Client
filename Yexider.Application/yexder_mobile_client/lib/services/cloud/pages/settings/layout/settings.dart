@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/popup/button/popup_button.dart';
 
 class SettingsLayout extends StatelessWidget {
@@ -19,35 +20,39 @@ class SettingsLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          title
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: body
-      ),
-      bottomNavigationBar: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-          child: Row(
-            children: [
-              // PopupButton(
-              //   text: "Discard", 
-              //   function: discard
-              // ),
-              PopupButton(
-                isPrimary: true,
-                text: "Save",
-                function: save,
-                isLoading: isLoading,
-              )
-            ],
+    return Observer(
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              title
+            ),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: body
+          ),
+          bottomNavigationBar: Container(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              child: Row(
+                children: [
+                  // PopupButton(
+                  //   text: "Discard", 
+                  //   function: discard
+                  // ),
+                  PopupButton(
+                    isPrimary: true,
+                    text: "Save",
+                    function: save,
+                    isLoading: isLoading,
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

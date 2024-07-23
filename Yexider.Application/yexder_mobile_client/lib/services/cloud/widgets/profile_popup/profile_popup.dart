@@ -10,6 +10,7 @@ import 'package:yexder_mobile_client/services/cloud/elements/avatar/avatar.dart'
 import 'package:yexder_mobile_client/services/cloud/elements/header/button/button.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/header/statistic_item/statistic_item.dart';
 import 'package:yexder_mobile_client/services/cloud/elements/popup/button/popup_button.dart';
+import 'package:yexder_mobile_client/services/cloud/layout/layout.dart';
 import 'package:yexder_mobile_client/services/cloud/pages/profile/profile_page_layout.dart';
 import 'package:yexder_mobile_client/services/cloud/pages/settings/settings_page_layout.dart';
 import 'package:yexder_mobile_client/services/cloud/state/user_state.dart';
@@ -63,7 +64,7 @@ class ProfilePopup extends StatelessWidget {
                         children: [
                           StatisticItem(title: ConvertHandler.convertTokenValueToString(userState.user!.balance ?? 0), amount: "Tokens"),
                           const SizedBox(width: 5.0,),
-                          StatisticItem(title: userState.user!.countFriends.toString(), amount: "Friends"),
+                          StatisticItem(title: userState.user!.friendCount.toString(), amount: "Friends"),
                           const SizedBox(width: 5.0,),
                           StatisticItem(title: ConvertHandler.convertBytesToMB(userState.user!.occupiedSpace ?? 0), amount: "MB (ocp.)"),
                           const SizedBox(width: 5.0,),
@@ -73,9 +74,13 @@ class ProfilePopup extends StatelessWidget {
                     ),
                     SettingButton(
                       function: () {
-                        Navigator.pushReplacement(
+                        applicationState.setCurrentIndex(ApplicationPages.profile.index);
+                        applicationState.setBottomPanelState(true);
+                        applicationState.setHeaderState(true);
+
+                        Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const ProfilePageLayout()),
+                          MaterialPageRoute(builder: (context) => Layout()),
                         );
                       },
                       icon: "assets/main/settings/account.svg",

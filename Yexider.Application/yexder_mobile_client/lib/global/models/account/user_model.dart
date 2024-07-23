@@ -9,7 +9,7 @@ class UserModel implements IDatabaseModel {
   String? nickname;
   String? email;
   double? balance;
-  int? countFriends;
+  int? friendCount;
   String? avatar;
   String? header;
   double? occupiedSpace;
@@ -30,7 +30,7 @@ class UserModel implements IDatabaseModel {
     nickname = map['nickname'];
     email = map['email'];
     balance = map['balance']?.toDouble();
-    countFriends = map['friendCount'];
+    friendCount = map['friendCount'];
     avatar = map['avatar'];
     header = map['header'];
     occupiedSpace = map['occupiedSpace']?.toDouble();
@@ -49,7 +49,7 @@ class UserModel implements IDatabaseModel {
     'balance': balance,
     'occupiedSpace': occupiedSpace,
     'storageSpace': storageSpace,
-    'countFriends': countFriends,
+    'friendCount': friendCount,
     'avatar': avatar,
     'header': header,
     'systemAccessToken': systemAccessToken,
@@ -67,7 +67,7 @@ class UserModel implements IDatabaseModel {
           nickname VARCHAR(200),
           email VARCHAR(200),
           balance DOUBLE,
-          countFriends INT,
+          friendCount INT,
           avatar TEXT,
           header TEXT,
           occupiedSpace DOUBLE,

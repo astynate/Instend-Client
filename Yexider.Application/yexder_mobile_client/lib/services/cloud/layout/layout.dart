@@ -6,7 +6,18 @@ import 'package:yexder_mobile_client/services/cloud/pages/explore/layout/explore
 import 'package:yexder_mobile_client/services/cloud/pages/gallery/layout/gallery_page_layout.dart';
 import 'package:yexder_mobile_client/services/cloud/pages/home/layout/home_page_layout.dart';
 import 'package:yexder_mobile_client/services/cloud/pages/music/layout/music_page_layout.dart';
+import 'package:yexder_mobile_client/services/cloud/pages/profile/profile_page_layout.dart';
 import 'package:yexder_mobile_client/services/cloud/widgets/navigation_panel/navigation_panel.dart';
+
+enum ApplicationPages {
+  home,
+  explore,
+  cloud,
+  gallery,
+  messages,
+  music,
+  profile
+}
 
 class Layout extends StatelessWidget {
   Layout({super.key});
@@ -16,7 +27,9 @@ class Layout extends StatelessWidget {
     const ExplorePageLayout(),
     const CloudPageLayout(),
     const GalleryPageLayout(),
-    const MusicPageLayout()
+    const MusicPageLayout(),
+    const MusicPageLayout(),
+    ProfilePageLayout()
   ];
 
   @override
