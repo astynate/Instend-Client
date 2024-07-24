@@ -24,8 +24,8 @@ class YexiderHeader extends StatelessWidget {
               padding: const EdgeInsets.only(right: 15.0),
               child: AvatarElement(
                 base64String: userState.user?.avatar ?? "", 
-                size: const Size(45, 45),
-                borderRadius: 45,
+                size: const Size(42, 42),
+                borderRadius: 42,
                 onClick: () {
                   if (userState.user != null) {
                     applicationState.showProfileBottomPanel(context, userState.user as UserModel);

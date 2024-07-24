@@ -12,7 +12,6 @@ import 'package:yexder_mobile_client/services/cloud/widgets/navigation_panel/nav
 enum ApplicationPages {
   home,
   explore,
-  cloud,
   gallery,
   messages,
   music,
@@ -25,7 +24,7 @@ class Layout extends StatelessWidget {
   final List<Widget> _pages = [
     const HomePageLayout(),
     const ExplorePageLayout(),
-    const CloudPageLayout(),
+    // const CloudPageLayout(),
     const GalleryPageLayout(),
     const MusicPageLayout(),
     const MusicPageLayout(),

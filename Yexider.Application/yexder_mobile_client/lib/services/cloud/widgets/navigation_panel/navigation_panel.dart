@@ -68,19 +68,19 @@ class _YexiderNavigationPanelState extends State<YexiderNavigationPanel> with Ti
                     applicationState.setCurrentIndex(indexValue);
                   },
                 ),
-                YexiderNavigationButton(
-                  defaultIcon: "assets/main/navigation/passive_icons/cloud_passive.svg",
-                  selectedIcon: "assets/main/navigation/active_icons/cloud_active.svg",
-                  index: 2,
-                  currentIndex: applicationState.currentIndex,
-                  onPressed: (indexValue) {
-                    applicationState.setCurrentIndex(indexValue);
-                  },
-                ),
+                // YexiderNavigationButton(
+                //   defaultIcon: "assets/main/navigation/passive_icons/cloud_passive.svg",
+                //   selectedIcon: "assets/main/navigation/active_icons/cloud_active.svg",
+                //   index: 2,
+                //   currentIndex: applicationState.currentIndex,
+                //   onPressed: (indexValue) {
+                //     applicationState.setCurrentIndex(indexValue);
+                //   },
+                // ),
                 YexiderNavigationButton(
                   defaultIcon: "assets/main/navigation/passive_icons/gallery_passive.svg",
                   selectedIcon: "assets/main/navigation/active_icons/gallery_active.svg",
-                  index: 3,
+                  index: 2,
                   currentIndex: applicationState.currentIndex,
                   onPressed: (indexValue) {
                     applicationState.setCurrentIndex(indexValue);
@@ -89,7 +89,7 @@ class _YexiderNavigationPanelState extends State<YexiderNavigationPanel> with Ti
                 YexiderNavigationButton(
                   defaultIcon: "assets/main/navigation/passive_icons/messages_passive.svg",
                   selectedIcon: "assets/main/navigation/active_icons/messages_active.svg",
-                  index: 4,
+                  index: 3,
                   currentIndex: applicationState.currentIndex,
                   onPressed: (indexValue) {
                     applicationState.setCurrentIndex(indexValue);
