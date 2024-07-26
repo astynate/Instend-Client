@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Search extends StatelessWidget {
-  String text; 
+enum SearchTypes {
+  shaded,
+  notPaintedOver
+}
 
-  Search({super.key, required this.text});
+class Search extends StatelessWidget {
+  final String text; 
+  final SearchTypes type;
+
+  const Search({super.key, required this.text, required this.type});
 
   @override
   Widget build(BuildContext context) {

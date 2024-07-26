@@ -1,20 +1,19 @@
+import 'package:mobx/mobx.dart';
 import 'package:yexder_mobile_client/global/database/database_model_interface.dart';
 
 class UserModel implements IDatabaseModel {
-  @override
-  String? id;
-  
-  String? name;
-  String? surname;
-  String? nickname;
-  String? email;
-  double? balance;
-  int? friendCount;
-  String? avatar;
-  String? header;
-  double? occupiedSpace;
-  double? storageSpace;
-  String? description;
+  @override @observable String? id;
+  @observable String? name;
+  @observable String? surname;
+  @observable String? nickname;
+  @observable String? email;
+  @observable double? balance;
+  @observable int? friendCount;
+  @observable String? avatar;
+  @observable String? header;
+  @observable double? occupiedSpace;
+  @observable double? storageSpace;
+  @observable String? description;
 
   String? systemAccessToken;
   String? systemRefreshToken;

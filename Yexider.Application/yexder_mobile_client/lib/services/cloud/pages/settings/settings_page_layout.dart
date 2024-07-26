@@ -26,7 +26,7 @@ class SettingsPageLayout extends StatelessWidget {
                 Center(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.95,
-                    child: Search(text: "Search")
+                    child: const Search(text: "Search", type: SearchTypes.shaded)
                   ),
                 ),
                 const SettingsMainPage()

@@ -22,13 +22,13 @@ class Layout extends StatelessWidget {
   Layout({super.key});
 
   final List<Widget> _pages = [
-    const HomePageLayout(),
+    HomePageLayout(),
     const ExplorePageLayout(),
     // const CloudPageLayout(),
     const GalleryPageLayout(),
     const MusicPageLayout(),
     const MusicPageLayout(),
-    ProfilePageLayout()
+    const ProfilePageLayout()
   ];
 
   @override
