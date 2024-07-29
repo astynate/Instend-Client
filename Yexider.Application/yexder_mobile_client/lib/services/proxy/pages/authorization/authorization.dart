@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yexder_mobile_client/global/database/database.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
+import 'package:yexder_mobile_client/global/interceptors/signalr_interceptor.dart';
 import 'package:yexder_mobile_client/global/models/account/user_model.dart';
 import 'package:yexder_mobile_client/global/models/system/application_state.dart';
 import 'package:yexder_mobile_client/global/models/system/theme_state.dart';
@@ -34,6 +35,7 @@ class AuthorizationPageState extends State<AuthorizationPage> {
         user.systemRefreshToken = await secureStorage.read(key: 'system_refresh_token');
 
         DatabaseService.instance.createOrUpdateRecord(user);
+        signalR.connect();
 
         setDefaultColorTheme();
 

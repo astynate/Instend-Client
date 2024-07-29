@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:yexder_mobile_client/global/models/storage/collection.dart';
@@ -15,18 +16,26 @@ class HomeSubPageAll extends StatelessWidget {
     return Observer(
       builder: (context) {
         return HomeSubPageTemplate(
-          widget: GridView.count(
-            crossAxisCount: 3,
-            mainAxisSpacing: 14,
-            crossAxisSpacing: 14,
-            childAspectRatio: 0.65,
-            children: List.from(storageState.collections[storageState.adaptId(null)]?.map((CollectionModel model) {
-              return CollectionView(collection: model,);
-            }).toList() ?? <Widget>[])
-            ..addAll(storageState.files[storageState.adaptId(null)]?.map((FileModel model) {
-              return FileView(file: model);
-            }).toList() ?? <Widget>[])
-          ),
+          widget: storageState.isLoading == false ? 
+            GridView.count(
+              crossAxisCount: 3,
+              mainAxisSpacing: 7,
+              crossAxisSpacing: 7,
+              childAspectRatio: 0.65,
+              children: 
+                List.from(storageState.collections[storageState.currentFolderId]?.map((CollectionModel model) {
+                  return CollectionView(collection: model,);
+                }).toList() ?? <Widget>[])
+                ..addAll(storageState.files[storageState.currentFolderId]?.map((FileModel model) {
+                  return FileView(file: model);
+                }).toList() ?? <Widget>[])
+            ) 
+          : 
+            Center(
+              child: CupertinoActivityIndicator(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            )
         );
       }
     );

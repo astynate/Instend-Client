@@ -46,7 +46,7 @@ class CollectionModel extends AccessItemBase implements IDatabaseModel {
     id = map['id'];
     name = map['name'];
     creationTime = DateTime.parse(map['creationTime']);
-    folderId = map['id'];
+    folderId = map['folderId'];
     visibility = map['visibility'];
     folderType = FolderType.values[map['folderType']?.toInt()];
     ownerId = map['ownerId'];

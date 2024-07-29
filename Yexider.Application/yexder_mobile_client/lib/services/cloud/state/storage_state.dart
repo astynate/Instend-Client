@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:yexder_mobile_client/global/interceptors/main_interceptor.dart';
 import 'package:yexder_mobile_client/global/models/storage/collection.dart';
 import 'package:yexder_mobile_client/global/models/storage/file.dart';
+import 'package:yexder_mobile_client/global/models/system/variables.dart';
 
 part 'storage_state.g.dart';
 
@@ -16,14 +17,39 @@ abstract class StorageStateBase with Store {
   ObservableMap<String, ObservableList<FileModel>> files = ObservableMap<String, ObservableList<FileModel>>();
 
   @observable
-  ObservableMap<String, ObservableList<String>> path = ObservableMap<String, ObservableList<String>>();
+  ObservableMap<String, ObservableList<CollectionModel>> paths = ObservableMap<String, ObservableList<CollectionModel>>();
+
+  @observable
+  String currentFolderId = GlobalVariables.guidEmthy;
+
+  @observable
+  String prevFolderId = GlobalVariables.guidEmthy;
+
+  @observable
+  bool isLoading = false;
 
   String adaptId(String? id) {
-    return id ?? "00000000-0000-0000-0000-000000000000";
+    return id ?? GlobalVariables.guidEmthy;
+  }
+
+  @action
+  void setCurrentFolderId(String id) {
+    currentFolderId = id;
+  }
+
+  @action
+  void setPrevFolderId(String id) {
+    prevFolderId = id;
+  }
+
+  @action
+  void setLoadingState(bool state) {
+    isLoading = state;
   }
 
   @action
   Future<void> fetchFolder(String? id) async {
+    isLoading = true;
     final response = await httpClient.get("/storage?id=${adaptId(id)}");
 
     if (response.isSuccess) {
@@ -33,29 +59,47 @@ abstract class StorageStateBase with Store {
         return;
       }
 
+      prevFolderId = currentFolderId;
+      currentFolderId = id ?? GlobalVariables.guidEmthy;
+
       if (result[0] is List<dynamic>) {
-        collections[adaptId(id)] = ObservableList<CollectionModel>();
+        collections[adaptId(currentFolderId)] = ObservableList<CollectionModel>();
 
         for (Map<String, dynamic> collection in result[0]) {
-          collections[adaptId(id)]?.add(CollectionModel.fromMap(collection));
+          collections[adaptId(currentFolderId)]?.add(CollectionModel.fromMap(collection));
         }
       }
 
       if (result[1] is List<dynamic>) {
-        files[adaptId(id)] = ObservableList<FileModel>();
+        files[adaptId(currentFolderId)] = ObservableList<FileModel>();
 
         for (Map<String, dynamic> file in result[1]) {
-          files[adaptId(id)]?.add(FileModel.fromMap(file));
+          files[adaptId(currentFolderId)]?.add(FileModel.fromMap(file));
         }
       }
 
       if (result[2] is List<dynamic>) {
-        path[adaptId(id)] = ObservableList<String>();
+        paths[adaptId(currentFolderId)] = ObservableList<CollectionModel>();
 
-        for (String folderId in result[2]) {
-          path[adaptId(id)]?.add(folderId);
+        for (Map<String, dynamic> path in result[2]) {
+          paths[adaptId(currentFolderId)]?.add(CollectionModel.fromMap(path));
         }
       }
+
+      isLoading = false;
+    }
+  }
+
+  @action 
+  void setParentFolderAsCurrent() {
+    ObservableList<CollectionModel> collections = paths[currentFolderId] ?? ObservableList();
+    int index = collections.length;
+
+    if (index >= 2) {
+      index -= 2;
+      fetchFolder(collections[index].id);
+    } else {
+      fetchFolder(GlobalVariables.guidEmthy);
     }
   }
 }

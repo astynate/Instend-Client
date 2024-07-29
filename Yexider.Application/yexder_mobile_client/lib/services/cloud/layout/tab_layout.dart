@@ -10,6 +10,7 @@ class TabLayout extends StatelessWidget {
   final double expandedHeight;
   final Widget floatingWidget;
   final Widget? header;
+  late FloatingActionButton? actionButton;
   late double headerSize;
 
   TabLayout({
@@ -20,7 +21,8 @@ class TabLayout extends StatelessWidget {
     required this.expandedHeight, 
     required this.floatingWidget, 
     this.header,
-    this.headerSize = 48
+    this.headerSize = 48,
+    this.actionButton
   });
 
   @override
@@ -89,13 +91,7 @@ class TabLayout extends StatelessWidget {
                 ),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              onPressed: () {
-
-              },
-              child: const Icon(Icons.add, size: 32,),
-            ),
+            floatingActionButton: actionButton
           ),
         );
       }
